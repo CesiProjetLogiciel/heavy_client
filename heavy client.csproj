@@ -1,0 +1,122 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{8CA01B6D-90A9-4ACA-A579-36E7BC972192}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>WindowsApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>heavy_client</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include=".git\COMMIT_EDITMSG" />
+    <None Include=".git\config" />
+    <None Include=".git\description" />
+    <None Include=".git\FETCH_HEAD" />
+    <None Include=".git\HEAD" />
+    <None Include=".git\hooks\README.sample" />
+    <None Include=".git\index" />
+    <None Include=".git\info\exclude" />
+    <None Include=".git\logs\HEAD" />
+    <None Include=".git\logs\refs\heads\dev" />
+    <None Include=".git\logs\refs\heads\main" />
+    <None Include=".git\logs\refs\remotes\origin\dev" />
+    <None Include=".git\logs\refs\remotes\origin\main" />
+    <None Include=".git\objects\0a\34381797823d75db869aa60459d9a357797d00" />
+    <None Include=".git\objects\0b\9b5ddcecd5be3bfb6c58afb3e19f0f0647b73e" />
+    <None Include=".git\objects\15\8a5c11dcb56082a4f8f1ecfebca5a52a221a92" />
+    <None Include=".git\objects\23\413ef5eb750c66b4bbc7597c8539e4ee3fb251" />
+    <None Include=".git\objects\3d\b836b2186ae01330acda6a12d20746118ba336" />
+    <None Include=".git\objects\3f\aa2d30b20940399216536f868ef40c89e20392" />
+    <None Include=".git\objects\42\4f6d28951d9df225a36ec5676a38c9d4ad5484" />
+    <None Include=".git\objects\61\493bd6c63059700b66fb7a942aeca72a5a80bc" />
+    <None Include=".git\objects\61\ef19ba2039fee0855c8a7b0c17b6bf207bf89a" />
+    <None Include=".git\objects\65\1054749f64d751731b748039caf7b9eb5ed634" />
+    <None Include=".git\objects\6a\f424702774ef3fbd986a6574a67170a5bda535" />
+    <None Include=".git\objects\81\3248fc79400b5fc94e3d699e94d5a4eb6c4a6e" />
+    <None Include=".git\objects\98\70b1cf14e5f98383488e184b4bc3a4a7e233c2" />
+    <None Include=".git\objects\a6\55e1a39d4e5c17d4e47f9de272e9828142c4d0" />
+    <None Include=".git\objects\cc\8c7d73374408d9f9eacb8b2030b6ab09373fbd" />
+    <None Include=".git\objects\cf\b438d3419be417a66ed23b5a7e307abc242172" />
+    <None Include=".git\objects\de\ff2af2bb088cf95571a5ef33aaa146af600e6b" />
+    <None Include=".git\objects\e1\ba4c5719f34226b4adad92bb34b10e8a1d1c15" />
+    <None Include=".git\objects\e5\5d18f40b4842b9cb3cfda69b0bdba4237b4528" />
+    <None Include=".git\objects\pack\pack-08d5f83de3f018547ee1433d9ec8b6f0fd90c1f7.idx" />
+    <None Include=".git\objects\pack\pack-08d5f83de3f018547ee1433d9ec8b6f0fd90c1f7.pack" />
+    <None Include=".git\refs\heads\dev" />
+    <None Include=".git\refs\heads\main" />
+    <None Include=".git\refs\remotes\origin\dev" />
+    <None Include=".git\refs\remotes\origin\HEAD" />
+    <None Include=".git\refs\remotes\origin\main" />
+    <None Include=".vs\heavy_client\FileContentIndex\16212e6f-f2e7-4217-acf6-1be28822f27e.vsidx" />
+    <None Include=".vs\heavy_client\FileContentIndex\996df6ec-7ef5-491c-b046-eee2f317b8a3.vsidx" />
+    <None Include=".vs\heavy_client\FileContentIndex\c68b20de-3d09-4c16-9ba6-cea1b2c7225b.vsidx" />
+    <None Include=".vs\heavy_client\FileContentIndex\read.lock" />
+    <None Include=".vs\heavy_client\v17\.suo" />
+    <None Include=".vs\ProjectSettings.json" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="Model\DatabaseInformations.cs" />
+    <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\UserInformations.cs" />
+    <Compile Include="ViewModel\DatabaseConnection.cs" />
+    <Compile Include="ViewModel\UserModel.cs" />
+    <Compile Include="ViewModel\ViewModel.cs" />
+    <Compile Include="View\LoginPage.cs" />
+    <Compile Include="View\MainPage.cs" />
+    <Compile Include="View\UserPage.cs" />
+    <Compile Include="View\View.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".git\ms-persist.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".git\objects\info\" />
+    <Folder Include=".git\refs\tags\" />
+    <Folder Include=".vs\heavy client\v17\" />
+    <Folder Include=".vs\heavy_client\FileContentIndex\merges\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
