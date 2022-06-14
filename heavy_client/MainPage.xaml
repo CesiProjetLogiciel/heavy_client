@@ -12,9 +12,9 @@
         <Button x:Name="connectButton" Width="467" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Top">
             <Button Content="Connect" Width="439" Click="Button_Click"/>
         </Button>
-        <TextBox x:Name="server_address" HorizontalAlignment="Center" Margin="0,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="32" Width="466"/>
-        <TextBox x:Name="server_address_Copy" HorizontalAlignment="Center" Margin="0,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="32" Width="467"/>
-        <PasswordBox HorizontalAlignment="Center" Margin="0,229,0,0" VerticalAlignment="Top" Width="467"/>
+        <TextBox x:Name="server_addressTextBox" HorizontalAlignment="Center" Margin="0,67,0,0" TextWrapping="Wrap" Text="DESKTOP-LQN9T82\SQLCESIEATS" VerticalAlignment="Top" Height="32" Width="466"/>
+        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Center" Margin="0,148,0,0" TextWrapping="Wrap" Text="sa" VerticalAlignment="Top" Height="32" Width="467"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" Margin="0,229,0,0" VerticalAlignment="Top" Password="admin1" Width="467"/>
         <TextBlock HorizontalAlignment="Left" Margin="41,44,0,0" TextWrapping="Wrap" Text="Server Address" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="41,125,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="45,205,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top"/>

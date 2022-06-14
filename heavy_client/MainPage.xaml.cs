@@ -37,13 +37,25 @@ namespace heavy_client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string connetionString;
             SqlConnection cnn;
-            connetionString = @"Data Source=DESKTOP-LQN9T82\SQLCESIEATS;Initial Catalog=cesieats;User ID=sa;Password=admin1";
+            string data_source = server_addressTextBox.Text;
+            string username = usernameTextBox.Text;
+            string password = passwordBox.Password;
+
+            string connetionString = String.Format(@"Data Source={0};Initial Catalog=cesieats;User ID={1};Password={2}",
+                data_source, username, password);
             cnn = new SqlConnection(connetionString);
-            cnn.Open();
-            _ = new MessageDialog("Connected").ShowAsync();
-            cnn.Close();
+            try
+            {
+                cnn.Open();
+                _ = new MessageDialog("Connected").ShowAsync();
+                //cnn.Close();
+            }
+            catch (Exception exc)
+            {
+                _ = new MessageDialog(exc.Message).ShowAsync();
+            }
+            
         }
     }
 }
