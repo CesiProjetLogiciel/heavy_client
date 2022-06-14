@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,6 +14,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Popups;
+
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -30,6 +33,17 @@ namespace heavy_client
             ApplicationView.PreferredLaunchViewSize = new Size(520, 390);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string connetionString;
+            SqlConnection cnn;
+            connetionString = @"Server=192.168.248.128\master;Database=cesieats;User ID=sa;Password=admin1";
+            cnn = new SqlConnection(connetionString);
+            cnn.Open();
+            _ = new MessageDialog("Connected").ShowAsync();
+            cnn.Close();
         }
     }
 }
