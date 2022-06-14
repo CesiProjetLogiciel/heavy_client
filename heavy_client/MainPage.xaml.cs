@@ -39,7 +39,7 @@ namespace heavy_client
         {
             string connetionString;
             SqlConnection cnn;
-            connetionString = @"Server=192.168.248.128\master;Database=cesieats;User ID=sa;Password=admin1";
+            connetionString = @"Data Source=DESKTOP-LQN9T82\SQLCESIEATS;Initial Catalog=cesieats;User ID=sa;Password=admin1";
             cnn = new SqlConnection(connetionString);
             cnn.Open();
             _ = new MessageDialog("Connected").ShowAsync();
