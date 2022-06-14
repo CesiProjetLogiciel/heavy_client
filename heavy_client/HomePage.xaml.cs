@@ -33,7 +33,7 @@ namespace heavy_client
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
 
-        public ObservableCollection<ORM.User> GetProducts(SqlConnection conn)
+        public ObservableCollection<ORM.User> GetProducts(string connectionString)
         {
             const string GetProductsQuery = "select id, lastname, firstname," +
                " email, isSuspended, UserTypes.id, UserTypes.type " +
@@ -42,29 +42,32 @@ namespace heavy_client
             var users = new ObservableCollection<ORM.User>();
             try
             {
-                if (conn.State == System.Data.ConnectionState.Open)
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand cmd = conn.CreateCommand())
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
                     {
-                        cmd.CommandText = GetProductsQuery;
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        using (SqlCommand cmd = conn.CreateCommand())
                         {
-                            while (reader.Read())
+                            cmd.CommandText = GetProductsQuery;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                var user = new ORM.User();
-                                user.UserID = reader.GetInt32(0);
-                                user.LastName = reader.GetString(1);
-                                user.FirstName = reader.GetString(2);
-                                user.email = reader.GetString(3);
-                                user.isSuspended = reader.GetBoolean(4);
-                                user.UserTypeId = reader.GetInt32(5);
-                                user.UserType = reader.GetString(6);
-                                users.Add(user);
+                                while (reader.Read())
+                                {
+                                    var user = new ORM.User();
+                                    user.UserID = reader.GetInt32(0);
+                                    user.LastName = reader.GetString(1);
+                                    user.FirstName = reader.GetString(2);
+                                    user.email = reader.GetString(3);
+                                    user.isSuspended = reader.GetBoolean(4);
+                                    user.UserTypeId = reader.GetInt32(5);
+                                    user.UserType = reader.GetString(6);
+                                    users.Add(user);
+                                }
                             }
                         }
                     }
                 }
-                
                 return users;
             }
             catch (Exception eSql)

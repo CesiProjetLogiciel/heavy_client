@@ -29,8 +29,8 @@ namespace heavy_client
         /// </summary>
         /// 
 
-        private SqlConnection _connection;
-        public SqlConnection ConnectionObj { get => _connection; set => _connection = value; }
+        private string _connectionString;
+        public string ConnectionString { get => _connectionString; set => _connectionString = value; }
 
         public App()
         {
