@@ -28,7 +28,7 @@ namespace heavy_client
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             ApplicationView.PreferredLaunchViewSize = new Size(520, 390);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
@@ -37,25 +37,30 @@ namespace heavy_client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection cnn;
+            Connect();
+            
+        }
+
+        private void Connect()
+        {
             string data_source = server_addressTextBox.Text;
             string username = usernameTextBox.Text;
             string password = passwordBox.Password;
 
             string connetionString = String.Format(@"Data Source={0};Initial Catalog=cesieats;User ID={1};Password={2}",
                 data_source, username, password);
-            cnn = new SqlConnection(connetionString);
+            SqlConnection cnn = (App.Current as App).ConnectionObj = new SqlConnection(connetionString);
             try
             {
                 cnn.Open();
                 _ = new MessageDialog("Connected").ShowAsync();
+                Frame.Navigate(typeof(HomePage));
                 //cnn.Close();
             }
             catch (Exception exc)
             {
                 _ = new MessageDialog(exc.Message).ShowAsync();
             }
-            
         }
     }
 }
