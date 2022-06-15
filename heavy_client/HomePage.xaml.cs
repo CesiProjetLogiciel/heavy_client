@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -24,7 +28,53 @@ namespace heavy_client
     {
         public HomePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            ApplicationView.PreferredLaunchViewSize = new Size(1280, 720);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+        }
+
+        public ObservableCollection<ORM.User> GetProducts(string connectionString)
+        {
+            const string GetProductsQuery = "select id, lastname, firstname," +
+               " email, isSuspended, UserTypes.id, UserTypes.type " +
+               " from Users inner join UserTypes on Users.id_UserTypes = UserTypes.id ";
+
+            var users = new ObservableCollection<ORM.User>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = GetProductsQuery;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var user = new ORM.User();
+                                    user.UserID = reader.GetInt32(0);
+                                    user.LastName = reader.GetString(1);
+                                    user.FirstName = reader.GetString(2);
+                                    user.email = reader.GetString(3);
+                                    user.isSuspended = reader.GetBoolean(4);
+                                    user.UserTypeId = reader.GetInt32(5);
+                                    user.UserType = reader.GetString(6);
+                                    users.Add(user);
+                                }
+                            }
+                        }
+                    }
+                }
+                return users;
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql.Message);
+            }
+            return null;
         }
     }
 }

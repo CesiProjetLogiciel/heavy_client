@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -26,6 +27,11 @@ namespace heavy_client
         /// Initialise l'objet d'application de singleton.  Il s'agit de la première ligne du code créé
         /// à être exécutée. Elle correspond donc à l'équivalent logique de main() ou WinMain().
         /// </summary>
+        /// 
+
+        private string _connectionString;
+        public string ConnectionString { get => _connectionString; set => _connectionString = value; }
+
         public App()
         {
             this.InitializeComponent();
