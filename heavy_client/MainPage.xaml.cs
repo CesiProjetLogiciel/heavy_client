@@ -38,8 +38,6 @@ namespace heavy_client
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Connect();
-            //Frame.Navigate(typeof(HomePage));
-
         }
 
         private void Connect()
@@ -57,9 +55,10 @@ namespace heavy_client
                 if (cnn.State == System.Data.ConnectionState.Open)
                 {
                     _ = new MessageDialog("Connected").ShowAsync();
-                    Frame.Navigate(typeof(HomePage));
                     (App.Current as App).ConnectionString = connectionString;
                     cnn.Close();
+                    Frame.Navigate(typeof(HomePage));
+                    
                 }
             }
             catch (Exception exc)

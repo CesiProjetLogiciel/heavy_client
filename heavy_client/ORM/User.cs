@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace heavy_client.ORM
+namespace heavy_client
 {
     public class User : INotifyPropertyChanged
     {
@@ -14,7 +14,6 @@ namespace heavy_client.ORM
         public string FirstName { get; set; }
         public string email { get; set; }
         public bool isSuspended { get; set; }
-        public int UserTypeId { get; set; }
         public string UserType { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;

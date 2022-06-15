@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,22 +25,40 @@ namespace heavy_client
     /// <summary>
     /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
     /// </summary>
-    public sealed partial class HomePage : Page
+    public partial class HomePage : Page
     {
+        private ObservableCollection<User> _users = new ObservableCollection<User>();
+        public ObservableCollection<User> Users
+        {
+            get { return _users; }
+            set { _users = value; }
+        }
+
         public HomePage()
         {
             InitializeComponent();
-            ApplicationView.PreferredLaunchViewSize = new Size(520, 390);
+            ApplicationView.PreferredLaunchViewSize = new Size(1280, 720);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+
         }
 
-        public ObservableCollection<ORM.User> GetProducts(string connectionString)
+        // Define this method within your main page class.
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            const string GetProductsQuery = "select id, lastname, firstname," +
-               " email, isSuspended, UserTypes.id, UserTypes.type " +
+            base.OnNavigatedTo(e);
+
+            // Instead of hard coded items, the data could be pulled
+            // asynchronously from a database or the internet.
+            Users = GetUsers((App.Current as App).ConnectionString);
+        }
+
+        public ObservableCollection<User> GetUsers(string connectionString)
+        {
+            const string GetProductsQuery = "select Users.id, lastname, firstname," +
+               " email, isSuspended, UserTypes.type " +
                " from Users inner join UserTypes on Users.id_UserTypes = UserTypes.id ";
 
-            var users = new ObservableCollection<ORM.User>();
+            var users = new ObservableCollection<User>();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -54,14 +73,15 @@ namespace heavy_client
                             {
                                 while (reader.Read())
                                 {
-                                    var user = new ORM.User();
-                                    user.UserID = reader.GetInt32(0);
-                                    user.LastName = reader.GetString(1);
-                                    user.FirstName = reader.GetString(2);
-                                    user.email = reader.GetString(3);
-                                    user.isSuspended = reader.GetBoolean(4);
-                                    user.UserTypeId = reader.GetInt32(5);
-                                    user.UserType = reader.GetString(6);
+                                    var user = new User
+                                    {
+                                        UserID = reader.GetInt32(0),
+                                        LastName = reader.GetString(1),
+                                        FirstName = reader.GetString(2),
+                                        email = reader.GetString(3),
+                                        isSuspended = reader.GetBoolean(4),
+                                        UserType = reader.GetString(5)
+                                    };
                                     users.Add(user);
                                 }
                             }
@@ -73,8 +93,14 @@ namespace heavy_client
             catch (Exception eSql)
             {
                 Debug.WriteLine("Exception: " + eSql.Message);
+                _ = new MessageDialog("Exception: " + eSql.Message).ShowAsync();
             }
             return null;
+        }
+
+        private void UsersListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

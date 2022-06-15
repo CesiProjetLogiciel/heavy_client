@@ -9,7 +9,35 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="388" Width="520">
 
     <Grid>
-        <ListView HorizontalAlignment="Center" Height="203" Margin="0,153,0,0" VerticalAlignment="Top" Width="476"/>
+        <ListView ItemsSource="{x:Bind Users}" x:Name="UsersListView" HorizontalAlignment="Center" Height="203" Margin="0,153,0,0" VerticalAlignment="Top" Width="476" SelectionChanged="UsersListView_SelectionChanged">
+
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:User">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="1" Text="{x:Bind UserID}" Margin="10,0,0,0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind LastName}" Margin="50,0,0,0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock  Grid.Column="3" Text="{x:Bind FirstName}" Margin="150,0,0,0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Grid.Column="4" Text="{x:Bind email}" Margin="225,0,0,0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Grid.Column="5" Text="{x:Bind isSuspended}" Margin="350,0,0,0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Grid.Column="6" Text="{x:Bind UserType}" Margin="415,0,0,0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         <TextBlock HorizontalAlignment="Center" Margin="0,29,0,0" TextWrapping="Wrap" Text="Search bar by last name:" VerticalAlignment="Top" Height="30" Width="475" FontSize="18"/>
         <TextBox HorizontalAlignment="Center" Margin="0,71,0,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="43" Width="476"/>
     </Grid>
