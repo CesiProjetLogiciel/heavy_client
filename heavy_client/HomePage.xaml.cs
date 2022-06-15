@@ -159,7 +159,7 @@ namespace heavy_client
             }
         }
 
-        private void Export_Button_Click(object sender, RoutedEventArgs e)
+        private void add_Button_Click(object sender, RoutedEventArgs e)
         {
             Users.Add(new User
             {
@@ -170,6 +170,11 @@ namespace heavy_client
                 IsSuspended = true,
                 UserType = "Livreur"
             });
+        }
+
+        private void Export_Button_Click(object sender, RoutedEventArgs e)
+        {
+            string csv = String.Join(",", Users.Select(x => x.ToString()).ToArray());
         }
     }
 }
