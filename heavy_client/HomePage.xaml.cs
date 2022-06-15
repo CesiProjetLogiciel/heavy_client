@@ -76,5 +76,10 @@ namespace heavy_client
             }
             return null;
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
