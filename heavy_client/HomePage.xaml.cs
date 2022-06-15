@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -172,9 +173,60 @@ namespace heavy_client
             });
         }
 
-        private void Export_Button_Click(object sender, RoutedEventArgs e)
+        private async void Export_Button_Click(object sender, RoutedEventArgs e)
         {
-            string csv = String.Join(",", Users.Select(x => x.ToString()).ToArray());
+            const string end_line = ";\n";
+
+            string csv = "ID,Lastname,Firstname,Email Address,Is suspended,Type;\n";
+
+            foreach (User user in Users)
+            {
+                string last = user.GetType().GetProperties().Last().GetValue(user, null).ToString();
+                foreach (PropertyInfo prop in user.GetType().GetProperties())
+                {
+                    csv += prop.GetValue(user, null).ToString();
+                    if (prop.GetValue(user, null).ToString() != last)
+                    {
+                        csv += ",";
+                    }
+                }
+
+                csv += end_line;
+            }
+            Debug.WriteLine(csv);
+
+            var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            // Dropdown of file types the user can save the file as
+            savePicker.FileTypeChoices.Add("CSV File", new List<string>() { ".csv" });
+            // Default file name if the user does not type one in or select a file to replace
+            savePicker.SuggestedFileName = "Users list";
+
+            Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
+            if (file != null)
+            {
+                // Prevent updates to the remote version of the file until
+                // we finish making changes and call CompleteUpdatesAsync.
+                Windows.Storage.CachedFileManager.DeferUpdates(file);
+                // write to file
+                await Windows.Storage.FileIO.WriteTextAsync(file, csv);
+                // Let Windows know that we're finished changing the file so
+                // the other app can update the remote version of the file.
+                // Completing updates may require Windows to ask for user input.
+                Windows.Storage.Provider.FileUpdateStatus status = await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(file);
+                //if (status == Windows.Storage.Provider.FileUpdateStatus.Complete)
+                //{
+                //    this.textBlock.Text = "File " + file.Name + " was saved.";
+                //}
+                //else
+                //{
+                //    this.textBlock.Text = "File " + file.Name + " couldn't be saved.";
+                //}
+            }
+            //else
+            //{
+            //    this.textBlock.Text = "Operation cancelled.";
+            //}
         }
     }
 }
