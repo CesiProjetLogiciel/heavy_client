@@ -25,6 +25,8 @@ namespace heavy_client
         public UserPage()
         {
             this.InitializeComponent();
+
+
         }
     }
 }

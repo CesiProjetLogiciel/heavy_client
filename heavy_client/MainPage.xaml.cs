@@ -38,7 +38,8 @@ namespace heavy_client
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Connect();
-            
+            //Frame.Navigate(typeof(HomePage));
+
         }
 
         private void Connect()

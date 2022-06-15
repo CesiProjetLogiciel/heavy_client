@@ -29,7 +29,7 @@ namespace heavy_client
         public HomePage()
         {
             InitializeComponent();
-            ApplicationView.PreferredLaunchViewSize = new Size(1280, 720);
+            ApplicationView.PreferredLaunchViewSize = new Size(520, 390);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
 

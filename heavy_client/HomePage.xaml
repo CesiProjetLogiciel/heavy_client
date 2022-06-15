@@ -6,11 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="388" Width="520">
 
     <Grid>
-        <TextBox HorizontalAlignment="Center" Margin="0,141,0,0" TextWrapping="Wrap" Text="" Name="SearchBar" VerticalAlignment="Top" Height="77" Width="1359" FontSize="48"/>
-        <ListView HorizontalAlignment="Center" Height="686" Margin="0,264,0,0" VerticalAlignment="Top" Width="1359"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,42,0,0" TextWrapping="Wrap" Text="Search bar by last name:" VerticalAlignment="Top" Height="77" Width="1359" FontSize="48"/>
+        <ListView HorizontalAlignment="Center" Height="203" Margin="0,153,0,0" VerticalAlignment="Top" Width="476"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,29,0,0" TextWrapping="Wrap" Text="Search bar by last name:" VerticalAlignment="Top" Height="30" Width="475" FontSize="18"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,71,0,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="43" Width="476"/>
     </Grid>
 </Page>
