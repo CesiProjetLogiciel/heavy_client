@@ -8,10 +8,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="388" Width="520">
 
-    <Grid Height="378" VerticalAlignment="Center" HorizontalAlignment="Center" Width="548">
-        <Button x:Name="connectButton" Width="467" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Top">
-            <Button Content="Connect" Width="439" Click="Button_Click"/>
-        </Button>
+    <Grid Height="388" VerticalAlignment="Center" HorizontalAlignment="Center" Width="519">
+        <Button x:Name="connectButton" Content="Connect" Click="Button_Click" Width="467" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="server_addressTextBox" HorizontalAlignment="Center" Margin="0,67,0,0" TextWrapping="Wrap" Text="DESKTOP-LQN9T82\SQLCESIEATS" VerticalAlignment="Top" Height="32" Width="466"/>
         <TextBox x:Name="usernameTextBox" HorizontalAlignment="Center" Margin="0,148,0,0" TextWrapping="Wrap" Text="sa" VerticalAlignment="Top" Height="32" Width="467"/>
         <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" Margin="0,229,0,0" VerticalAlignment="Top" Password="admin1" Width="467"/>
