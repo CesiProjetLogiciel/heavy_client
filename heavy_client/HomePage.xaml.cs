@@ -282,5 +282,10 @@ namespace heavy_client
                                     String.Format("WHERE Users.lastname LIKE '%{0}%' OR Users.firstname LIKE '%{0}%' OR Users.email LIKE '%{0}%'", SearchBar.Text);
             GetUsers(_connectionString, SetSearchQuery);
         }
+
+        private void Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(UserPage));
+        }
     }
 }
