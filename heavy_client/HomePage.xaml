@@ -6,52 +6,65 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="388" Width="520">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <ListView ItemsSource="{x:Bind Users}" x:Name="UsersListView" HorizontalAlignment="Center" Height="203" Margin="0,153,0,0" VerticalAlignment="Top" Width="476" SelectionChanged="UsersListView_SelectionChanged">
-
+        <ListView ItemsSource="{x:Bind Users, Mode=OneWay}" x:Name="UsersListView" Margin="25,145,25,25" SelectionChanged="UsersListView_SelectionChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid BorderThickness="0,0,0,0.5" BorderBrush="AntiqueWhite">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="ID"/>
+                        <TextBlock Grid.Column="1" Text="Lastname"/>
+                        <TextBlock Grid.Column="2" Text="Firstname"/>
+                        <TextBlock Grid.Column="3" Text="Email address"/>
+                        <TextBlock Grid.Column="4" Text="Is suspended"/>
+                        <TextBlock Grid.Column="5" Text="Type"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:User">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="1" Text="{x:Bind UserID}" Margin="10,0,0,0"
-                    Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Grid.Column="2" Text="{x:Bind LastName}" Margin="50,0,0,0"
-                    Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock  Grid.Column="3" Text="{x:Bind FirstName}" Margin="150,0,0,0"
-                    Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Grid.Column="4" Text="{x:Bind email}" Margin="225,0,0,0"
-                    Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Grid.Column="5" Text="{x:Bind isSuspended}" Margin="350,0,0,0"
-                    Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Grid.Column="6" Text="{x:Bind UserType}" Margin="415,0,0,0"
-                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Grid.Column="0" Text="{x:Bind UserID}"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind LastName}"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind FirstName}"/>
+                        <TextBlock Grid.Column="3" Text="{x:Bind Email}"/>
+                        <TextBlock Grid.Column="4" Text="{x:Bind IsSuspended, Mode=OneWay}"/>
+                        <TextBlock Grid.Column="5" Text="{x:Bind UserType}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBlock HorizontalAlignment="Center" Margin="0,29,0,0" TextWrapping="Wrap" Text="Search bar by last name:" VerticalAlignment="Top" Height="30" Width="475" FontSize="18"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,71,0,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="43" Width="476"/>
-        <Button Name="Edit_Button" Height="20" Margin="426,119,0,0" VerticalAlignment="Top" Width="72" Click="Edit_Button_Click">
-            <TextBlock Text="Edit" Margin="-12,-10,-13,-9"/>
-        </Button>
-        <Button x:Name="Delete_Button" Height="20" Margin="342,120,0,0" VerticalAlignment="Top" Width="72">
-            <TextBlock Text="Delete" Margin="-12,-10,-13,-9"/>
-        </Button>
-        <Button x:Name="Disable_Button" Height="20" Margin="255,120,0,0" VerticalAlignment="Top" Width="72">
-            <TextBlock Text="Disable" Margin="-12,-10,-13,-9"/>
-        </Button>
-        <Button x:Name="Export_Button" Height="20" Margin="165,120,0,0" VerticalAlignment="Top" Width="72">
-            <TextBlock Text="Export" Margin="-12,-10,-13,-9"/>
-        </Button>
-        <TextBlock HorizontalAlignment="Left" Height="20" Margin="22,119,0,0" TextWrapping="Wrap" Text="Users List:" VerticalAlignment="Top" Width="132"/>
+        <TextBlock HorizontalAlignment="Stretch" Margin="25,29,25,0" TextWrapping="Wrap" Text="Search bar by last name:" VerticalAlignment="Top" Height="30" Width="auto" FontSize="18"/>
+        <TextBox HorizontalAlignment="Stretch" Margin="25,71,25,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="43" Width="auto"/>
+        <Button x:Name="Edit_Button" IsEnabled="False" Height="20" Content="Edit" Padding="0,0,0,0" BorderThickness="0" Margin="435,120,0,0" VerticalAlignment="Top" Width="72"/>
+        <Button x:Name="Delete_Button" IsEnabled="False" Height="20" Content="Delete" Padding="0,0,0,0" BorderThickness="0" Margin="345,120,0,0" VerticalAlignment="Top" Width="72"/>
+        <Button x:Name="Disable_Button" IsEnabled="False" Height="20" Content="Disable" Padding="0,0,0,0" BorderThickness="0" Margin="255,120,0,0" VerticalAlignment="Top" Width="72" Click="Disable_Button_Click"/>
+        <Button x:Name="Export_Button" Height="20" Content="Export" Padding="0,0,0,0" BorderThickness="0" Margin="165,120,0,0" VerticalAlignment="Top" Width="72" Click="Export_Button_Click"/>
+        <Button x:Name="add_Button" Height="20" Content="add_debug" Padding="0,0,0,0" BorderThickness="0" Margin="100,120,0,0" VerticalAlignment="Top" Width="72" Click="add_Button_Click"/>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="22,119,0,0" TextWrapping="Wrap" Text="Users List:" VerticalAlignment="Top" Width="auto"/>
     </Grid>
 </Page>

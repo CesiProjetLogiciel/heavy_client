@@ -6,12 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="388" Width="520">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+    Height="390" Width="520" MinHeight="390" MaxHeight="390" MinWidth="520" MaxWidth="520">
 
-    <Grid Height="378" VerticalAlignment="Center" HorizontalAlignment="Center" Width="548">
-        <Button x:Name="connectButton" Width="467" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Top">
-            <Button Content="Connect" Width="439" Click="Button_Click"/>
-        </Button>
+    <Grid Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="auto">
+        <Button x:Name="connectButton" Content="Connect" Click="Button_Click" Width="auto" HorizontalAlignment="Stretch" Margin="80,200,80,0"/>
         <TextBox x:Name="server_addressTextBox" HorizontalAlignment="Center" Margin="0,67,0,0" TextWrapping="Wrap" Text="DESKTOP-LQN9T82\SQLCESIEATS" VerticalAlignment="Top" Height="32" Width="466"/>
         <TextBox x:Name="usernameTextBox" HorizontalAlignment="Center" Margin="0,148,0,0" TextWrapping="Wrap" Text="sa" VerticalAlignment="Top" Height="32" Width="467"/>
         <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" Margin="0,229,0,0" VerticalAlignment="Top" Password="admin1" Width="467"/>

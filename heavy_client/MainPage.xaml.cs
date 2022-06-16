@@ -29,10 +29,6 @@ namespace heavy_client
         public MainPage()
         {
             InitializeComponent();
-
-            ApplicationView.PreferredLaunchViewSize = new Size(520, 390);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
