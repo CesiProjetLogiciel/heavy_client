@@ -6,9 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="388" Width="520">
 
     <Grid>
+        <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,18,0,0" FontSize="15" TextWrapping="Wrap" Text="User Page" VerticalAlignment="Top" Width="142"/>
+        <TextBlock HorizontalAlignment="Left" Height="27" Margin="10,56,0,0" FontSize="15" TextWrapping="Wrap" Text="User First Name :" VerticalAlignment="Top" Width="154"/>
+        <TextBox x:Name="firstname" HorizontalAlignment="Center" Height="32" Margin="0,80,0,0" FontSize="15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="497"/>
+        <TextBlock HorizontalAlignment="Center" Height="23" Margin="0,117,0,0" FontSize="15" TextWrapping="Wrap" Text="User Last Name :" VerticalAlignment="Top" Width="498"/>
+        <TextBox x:Name="lastname" HorizontalAlignment="Center" Height="32" Margin="0,142,0,0" FontSize="15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="499" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock HorizontalAlignment="Center" Height="24" Margin="0,179,0,0" FontSize="15" TextWrapping="Wrap" Text="User email :" VerticalAlignment="Top" Width="497"/>
+        <TextBox x:Name="email" HorizontalAlignment="Center" Height="32" Margin="0,204,0,0" FontSize="15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="499"/>
+        <TextBlock HorizontalAlignment="Center" Height="24" Margin="0,241,0,0" FontSize="15" TextWrapping="Wrap" Text="Billing Address" VerticalAlignment="Top" Width="496" SelectionChanged="TextBlock_SelectionChanged"/>
+        <Button x:Name="Quit_Button" Content="Quit" FontSize="11" Margin="477,14,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Height="22" Width="33"/>
+        <Button x:Name="Save_Button" Content="Save" FontSize="11" Margin="426,14,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Height="22" Width="33"/>
+        <ComboBox x:Name="Billing_Address_Box" Height="32" Margin="0,266,0,0" Width="499" HorizontalAlignment="Center" IsEditable="True"/>
+        <TextBlock HorizontalAlignment="Center" Height="24" Margin="0,304,0,0" FontSize="15" TextWrapping="Wrap" Text="Delivery Address" VerticalAlignment="Top" Width="496" SelectionChanged="TextBlock_SelectionChanged"/>
 
     </Grid>
 </Page>
