@@ -58,10 +58,9 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBlock HorizontalAlignment="Stretch" Margin="25,29,25,0" TextWrapping="Wrap" Text="Search bar by last name:" VerticalAlignment="Top" Height="30" Width="auto" FontSize="18"/>
-        <TextBox HorizontalAlignment="Stretch" Margin="25,71,25,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="43" Width="auto"/>
+        <TextBox Margin="25,37,25,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="31" Width="auto" TextChanged="SearchBar_TextChanged"/>
         <Button x:Name="Edit_Button" IsEnabled="False" Height="20" Content="Edit" Padding="0,0,0,0" BorderThickness="0" Margin="435,120,0,0" VerticalAlignment="Top" Width="72"/>
-        <Button x:Name="Delete_Button" IsEnabled="False" Height="20" Content="Delete" Padding="0,0,0,0" BorderThickness="0" Margin="345,120,0,0" VerticalAlignment="Top" Width="72"/>
+        <Button x:Name="Delete_Button" IsEnabled="False" Height="20" Content="Delete" Padding="0,0,0,0" BorderThickness="0" Margin="345,120,0,0" VerticalAlignment="Top" Width="72" Click="Delete_Button_Click"/>
         <Button x:Name="Disable_Button" IsEnabled="False" Height="20" Content="Disable" Padding="0,0,0,0" BorderThickness="0" Margin="255,120,0,0" VerticalAlignment="Top" Width="72" Click="Disable_Button_Click"/>
         <Button x:Name="Export_Button" Height="20" Content="Export" Padding="0,0,0,0" BorderThickness="0" Margin="165,120,0,0" VerticalAlignment="Top" Width="72" Click="Export_Button_Click"/>
         <Button x:Name="add_Button" Height="20" Content="add_debug" Padding="0,0,0,0" BorderThickness="0" Margin="100,120,0,0" VerticalAlignment="Top" Width="72" Click="add_Button_Click"/>

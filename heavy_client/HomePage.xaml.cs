@@ -52,15 +52,15 @@ namespace heavy_client
 
             // Instead of hard coded items, the data could be pulled
             // asynchronously from a database or the internet.
-            GetUsers(_connectionString);
+            const string GetUsersQuery = "SELECT Users.id, lastname, firstname," +
+                                         " email, isSuspended, UserTypes.type " +
+                                         " from Users inner join UserTypes on Users.id_UserTypes = UserTypes.id ";
+            GetUsers(_connectionString, GetUsersQuery);
         }
 
-        public void GetUsers(string connectionString)
+        public void GetUsers(string connectionString, string GetUsersQuery)
         {
-            const string GetUsersQuery = "select Users.id, lastname, firstname," +
-               " email, isSuspended, UserTypes.type " +
-               " from Users inner join UserTypes on Users.id_UserTypes = UserTypes.id ";
-
+            Users.Clear();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -144,7 +144,7 @@ namespace heavy_client
                             {
                                 while (reader.Read())
                                 {
-                                    _ = new MessageDialog(reader.GetString(1)).ShowAsync();
+                                    _ = new MessageDialog(reader.GetString(0)).ShowAsync();
                                 }
                             }
                         }
@@ -227,6 +227,60 @@ namespace heavy_client
             //{
             //    this.textBlock.Text = "Operation cancelled.";
             //}
+        }
+
+        private void Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            User user = UsersListView.SelectedItem as User;
+            Disable_Button.Focus(FocusState.Pointer); //made the button get focus.
+            string SetDeleteQuery = "SET XACT_ABORT ON;" +
+                                    "BEGIN TRANSACTION;" +
+                                    String.Format("DELETE FROM BillingAddress WHERE BillingAddress.id_Users = {0};", user.UserID) +
+                                    String.Format("DELETE FROM DeliveryAddress WHERE DeliveryAddress.id_Users = {0};", user.UserID) +
+                                    String.Format("DELETE FROM paypalAddress WHERE paypalAddress.id_Users = {0};", user.UserID) +
+                                    String.Format("DELETE FROM Users WHERE Users.id = {0};", user.UserID) +
+                                    "COMMIT;";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = SetDeleteQuery;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    _ = new MessageDialog(reader.GetString(0)).ShowAsync();
+                                }
+                            }
+                        }
+                    }
+                }
+                Users.Remove(user);
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql.Message);
+                _ = new MessageDialog("Exception: " + eSql.Message).ShowAsync();
+            }
+        }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //if (SearchBar.Text != null)
+            //{
+            //    const string SetSearchQuery = "SELECT Users.id, lastname, firstname," +
+            //                             " email, isSuspended, UserTypes.type " +
+            //                             " from Users inner join UserTypes on Users.id_UserTypes = UserTypes.id ";
+            //}
+            string SetSearchQuery = "SELECT Users.id, Users.lastname, Users.firstname, Users.email, Users.isSuspended, UserTypes.type " +
+                                    "FROM Users INNER JOIN UserTypes ON Users.id_UserTypes = UserTypes.id " +
+                                    String.Format("WHERE Users.lastname LIKE '%{0}%' OR Users.firstname LIKE '%{0}%' OR Users.email LIKE '%{0}%'", SearchBar.Text);
+            GetUsers(_connectionString, SetSearchQuery);
         }
     }
 }
