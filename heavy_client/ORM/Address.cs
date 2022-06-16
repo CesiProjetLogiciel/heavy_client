@@ -18,8 +18,7 @@ namespace heavy_client
         private string _lastname;
         private string _firstname;
         private string _phoneNumber;
-        private string _countryName;
-        private string _phoneCountryCode;
+        private Country _country;
 
         public int UserID { get; set; }
         public string Zipcode
@@ -62,15 +61,10 @@ namespace heavy_client
             get { return _phoneNumber; }
             set { if (_phoneNumber != value) { _phoneNumber = value; NotifyPropertyChanged(); } }
         }
-        public string CountryName
+        public Country Country
         {
-            get { return _countryName; }
-            set { if (_countryName != value) { _countryName = value; NotifyPropertyChanged(); } }
-        }
-        public string PhoneCountryCode
-        {
-            get { return _phoneCountryCode; }
-            set { if (_phoneCountryCode != value) { _phoneCountryCode = value; NotifyPropertyChanged(); } }
+            get { return _country; }
+            set { if (_country != value) { _country = value; NotifyPropertyChanged(); } }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
