@@ -25,11 +25,8 @@ namespace heavy_client
             set { if (_name != value) { _name = value; NotifyPropertyChanged(); } }
         }
 
-        public Country(int countryID, string phoneCountryCode, string name)
+        public Country(string name, string phoneCountryCode)
         {
-            PhoneCountryCode = phoneCountryCode;
-            Name = name;
-            CountryID = countryID;
             PhoneCountryCode = phoneCountryCode;
             Name = name;
         }

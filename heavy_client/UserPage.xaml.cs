@@ -83,8 +83,7 @@ namespace heavy_client
                                         Lastname = reader.GetString(5),
                                         Firstname = reader.GetString(6),
                                         PhoneNumber = reader.GetString(7),
-                                        CountryName = reader.GetString(8),
-                                        PhoneCountryCode = reader.GetString(9)
+                                        Country = new Country(reader.GetString(8), reader.GetString(9))
                                     };
                                     DeliveryAddresses.Add(address);
                                 }
@@ -107,8 +106,7 @@ namespace heavy_client
                                         Lastname = reader.GetString(5),
                                         Firstname = reader.GetString(6),
                                         PhoneNumber = reader.GetString(7),
-                                        CountryName = reader.GetString(8),
-                                        PhoneCountryCode = reader.GetString(9)
+                                        Country = new Country(reader.GetString(8), reader.GetString(9))
                                     };
                                     BillingAddresses.Add(address);
                                 }
