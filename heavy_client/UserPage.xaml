@@ -16,11 +16,87 @@
         <TextBox x:Name="lastname" HorizontalAlignment="Center" Height="32" Margin="0,142,0,0" FontSize="15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="499" RenderTransformOrigin="0.5,0.5"/>
         <TextBlock HorizontalAlignment="Center" Height="24" Margin="0,179,0,0" FontSize="15" TextWrapping="Wrap" Text="User email :" VerticalAlignment="Top" Width="497"/>
         <TextBox x:Name="email" HorizontalAlignment="Center" Height="32" Margin="0,204,0,0" FontSize="15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="499"/>
-        <TextBlock HorizontalAlignment="Center" Height="24" Margin="0,241,0,0" FontSize="15" TextWrapping="Wrap" Text="Billing Address" VerticalAlignment="Top" Width="496" SelectionChanged="TextBlock_SelectionChanged"/>
+        <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,320,0,0" FontSize="15" TextWrapping="Wrap" Text="Billing Address" VerticalAlignment="Top" Width="496" SelectionChanged="TextBlock_SelectionChanged"/>
         <Button x:Name="Quit_Button" Content="Quit" FontSize="11" Margin="477,14,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Height="22" Width="33"/>
         <Button x:Name="Save_Button" Content="Save" FontSize="11" Margin="426,14,0,0" Padding="0,0,0,0" VerticalAlignment="Top" Height="22" Width="33"/>
-        <ComboBox x:Name="Billing_Address_Box" Height="32" Margin="0,266,0,0" Width="499" HorizontalAlignment="Center" IsEditable="True"/>
-        <TextBlock HorizontalAlignment="Center" Height="24" Margin="0,304,0,0" FontSize="15" TextWrapping="Wrap" Text="Delivery Address" VerticalAlignment="Top" Width="496" SelectionChanged="TextBlock_SelectionChanged"/>
+        <TextBlock HorizontalAlignment="Center" Height="24" Margin="0,241,0,0" FontSize="15" TextWrapping="Wrap" Text="Delivery Address" VerticalAlignment="Top" Width="496" SelectionChanged="TextBlock_SelectionChanged"/>
+        <ListView ItemsSource="{x:Bind DeliveryAddress, Mode=OneWay}" x:Name="DeliveryAddressListView" Margin="10,266,10,73" SelectionChanged="DeliveryAddressListView_SelectionChanged">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid BorderThickness="0,0,0,0.5" BorderBrush="AntiqueWhite">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Zipcode"/>
+                        <TextBlock Grid.Column="1" Text="City"/>
+                        <TextBlock Grid.Column="2" Text="Address"/>
+                        <TextBlock Grid.Column="3" Text="State"/>
+                        <TextBlock Grid.Column="4" Text="Additionnall Info"/>
+                        <TextBlock Grid.Column="5" Text="Last name"/>
+                        <TextBlock Grid.Column="6" Text="First name"/>
+                        <TextBlock Grid.Column="7" Text="Phone number"/>
+                        <TextBlock Grid.Column="8" Text="Contry"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:User">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
+                        <TextBlock Grid.Column="0" Text="{x:Bind zipCode, Mode=TwoWay}"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind city, Mode=TwoWay}"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind address, Mode=TwoWay}"/>
+                        <TextBlock Grid.Column="3" Text="{x:Bind state, Mode=TwoWay}"/>
+                        <TextBlock Grid.Column="4" Text="{x:Bind additionnalInfo, Mode=TwoWay}"/>
+                        <TextBlock Grid.Column="5" Text="{x:Bind lastname, Mode=TwoWay}"/>
+                        <TextBlock Grid.Column="6" Text="{x:Bind firstname, Mode=TwoWay}"/>
+                        <TextBlock Grid.Column="7" Text="{x:Bind phonenumber, Mode=TwoWay}"/>
+                        <TextBlock Grid.Column="8" Text="{x:Bind contry, Mode=TwoWay}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView ItemsSource="{x:Bind BillingAddress}"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Top" Height="28" Width="499" Margin="0,350,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:User">
+                    <TextBox Text="{x:Bind zipCode, Mode=TwoWay}"/>
+                    <TextBox Text="{x:Bind city, Mode=TwoWay}"/>
+                    <TextBox Text="{x:Bind address, Mode=TwoWay}"/>
+                    <TextBox Text="{x:Bind state, Mode=TwoWay}"/>
+                    <TextBox Text="{x:Bind additionnalInfo, Mode=TwoWay}"/>
+                    <TextBox Text="{x:Bind lastname, Mode=TwoWay}"/>
+                    <TextBox Text="{x:Bind firstname, Mode=TwoWay}"/>
+                    <TextBox Text="{x:Bind phonenumber, Mode=TwoWay}"/>
+                    <TextBox Text="{x:Bind contry, Mode=TwoWay}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

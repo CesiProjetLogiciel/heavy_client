@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Input;
 using Windows.Foundation;
@@ -33,5 +35,28 @@ namespace heavy_client
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
 
+    }
+
+
+
+    public class Customer : INotifyPropertyChanged
+    {
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

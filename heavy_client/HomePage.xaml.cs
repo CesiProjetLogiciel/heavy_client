@@ -231,7 +231,8 @@ namespace heavy_client
 
         private void Edit_Button_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage));
+            User userselected = UsersListView.SelectedItem as User;
+            Frame.Navigate(typeof(UserPage), userselected.UserID);
         }
     }
 }
