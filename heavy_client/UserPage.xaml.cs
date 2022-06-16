@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,6 +11,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -27,12 +31,97 @@ namespace heavy_client
     /// </summary>
     public sealed partial class UserPage : Page
     {
+
+        private readonly string _connectionString = (App.Current as App).ConnectionString;
+        private bool _changeIsSuspendedTo = true;
+
+        private ObservableCollection<Address> _deliveryAddresses = new ObservableCollection<Address>();
+        private ObservableCollection<Address> _billingAddresses = new ObservableCollection<Address>();
+        public ObservableCollection<Address> DeliveryAddresses { get => _deliveryAddresses; set => _deliveryAddresses = value; }
+        public ObservableCollection<Address> BillingAddresses { get => _billingAddresses; set => _billingAddresses = value; }
+
+        string GetAddressQuery (string table)
+            {
+                return String.Format("SELECT zipcode, city, address, state, " +
+                "additionnalInfo, t1.lastname, t1.firstname, phonenumber, Countries.countryname, Countries.phonecountrycode " +
+                "FROM (SELECT zipcode, city, address, state, additionnalInfo, {0}.lastname, {0}.firstname, " +
+                "phonenumber, Countries.countryname, Countries.phonecountrycode, {0}.id_Users " +
+                "FROM {0} INNER JOIN Countries ON  {0}.id_Countries = Countries.id) " +
+                "AS t1 INNER JOIN Users ON {0}.id_Users = Users.id ", table);
+            }
+
         public UserPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+        }
 
-            ApplicationView.PreferredLaunchViewSize = new Size(520, 390);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+        public void GetAddress(string connectionString)
+        {
+            
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = GetAddressQuery("DeliveryAddress");
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var address = new Address
+                                    {
+                                        Zipcode = reader.GetString(0),
+                                        City = reader.GetString(1),
+                                        Street = reader.GetString(2),
+                                        State = reader.GetString(3),
+                                        AdditionnalInfo = reader.GetString(4),
+                                        Lastname = reader.GetString(5),
+                                        Firstname = reader.GetString(6),
+                                        PhoneNumber = reader.GetString(7),
+                                        CountryName = reader.GetString(8),
+                                        PhoneCountryCode = reader.GetString(9)
+                                    };
+                                    DeliveryAddresses.Add(address);
+                                }
+                            }
+                        }
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = GetAddressQuery("BillingAddress");
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var address = new Address
+                                    {
+                                        Zipcode = reader.GetString(0),
+                                        City = reader.GetString(1),
+                                        Street = reader.GetString(2),
+                                        State = reader.GetString(3),
+                                        AdditionnalInfo = reader.GetString(4),
+                                        Lastname = reader.GetString(5),
+                                        Firstname = reader.GetString(6),
+                                        PhoneNumber = reader.GetString(7),
+                                        CountryName = reader.GetString(8),
+                                        PhoneCountryCode = reader.GetString(9)
+                                    };
+                                    BillingAddresses.Add(address);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql.Message);
+                _ = new MessageDialog("Exception: " + eSql.Message).ShowAsync();
+            }
         }
 
     }
