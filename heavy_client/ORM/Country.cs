@@ -25,12 +25,6 @@ namespace heavy_client
             set { if (_name != value) { _name = value; NotifyPropertyChanged(); } }
         }
 
-        public Country(string name, string phoneCountryCode)
-        {
-            PhoneCountryCode = phoneCountryCode;
-            Name = name;
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {

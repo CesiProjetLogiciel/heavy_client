@@ -17,8 +17,9 @@ namespace heavy_client
         private string _additionnalInfo;
         private string _lastname;
         private string _firstname;
+        private string _countryName;
         private string _phoneNumber;
-        private Country _country;
+        private string _phoneCountryCode;
 
         public int UserID { get; set; }
         public string Zipcode
@@ -36,7 +37,7 @@ namespace heavy_client
             get { return _street; }
             set { if (_street != value) { _street = value; NotifyPropertyChanged(); } }
         }
-        public string State 
+        public string State
         {
             get { return _state; }
             set { if (_state != value) { _state = value; NotifyPropertyChanged(); } }
@@ -56,15 +57,20 @@ namespace heavy_client
             get { return _firstname; }
             set { if (_firstname != value) { _firstname = value; NotifyPropertyChanged(); } }
         }
+        public string PhoneCountryCode
+        {
+            get { return _phoneCountryCode; }
+            set { if (_phoneCountryCode != value) { _phoneCountryCode = value; NotifyPropertyChanged(); } }
+        }
         public string PhoneNumber
         {
             get { return _phoneNumber; }
             set { if (_phoneNumber != value) { _phoneNumber = value; NotifyPropertyChanged(); } }
         }
-        public Country Country
+        public string CountryName
         {
-            get { return _country; }
-            set { if (_country != value) { _country = value; NotifyPropertyChanged(); } }
+            get { return _countryName; }
+            set { if (_countryName != value) { _countryName = value; NotifyPropertyChanged(); } }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -75,3 +81,4 @@ namespace heavy_client
 
     }
 }
+
