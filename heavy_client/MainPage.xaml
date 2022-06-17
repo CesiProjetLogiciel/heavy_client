@@ -7,15 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
-    Height="390" Width="520" MinHeight="390" MaxHeight="390" MinWidth="520" MaxWidth="520">
+    >
 
     <Grid Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="auto">
-        <Button x:Name="connectButton" Content="Connect" Click="Button_Click" Width="auto" HorizontalAlignment="Stretch" Margin="80,200,80,0"/>
-        <TextBox x:Name="server_addressTextBox" HorizontalAlignment="Center" Margin="0,67,0,0" TextWrapping="Wrap" Text="DESKTOP-LQN9T82\SQLCESIEATS" VerticalAlignment="Top" Height="32" Width="466"/>
-        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Center" Margin="0,148,0,0" TextWrapping="Wrap" Text="sa" VerticalAlignment="Top" Height="32" Width="467"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" Margin="0,229,0,0" VerticalAlignment="Top" Password="admin1" Width="467"/>
-        <TextBlock HorizontalAlignment="Left" Margin="41,44,0,0" TextWrapping="Wrap" Text="Server Address" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="41,125,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top"/>
+        <Button x:Name="connectButton" Content="Connect" Click="Button_Click" Width="auto" HorizontalAlignment="Stretch" Margin="45,200,45,0"/>
+        <TextBox x:Name="server_addressTextBox" HorizontalAlignment="Stretch" Margin="45,67,45,0" TextWrapping="Wrap" Text="DESKTOP-LQN9T82\SQLCESIEATS" VerticalAlignment="Top" Height="32"/>
+        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Stretch" Margin="45,148,45,0" TextWrapping="Wrap" Text="sa" VerticalAlignment="Top" Height="32"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Stretch" Margin="45,229,45,0" VerticalAlignment="Top" Password="admin1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="45,44,0,0" TextWrapping="Wrap" Text="Server Address" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="45,125,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="45,205,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top"/>
 
     </Grid>

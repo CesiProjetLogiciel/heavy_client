@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
+using System.Diagnostics;
 
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -33,8 +34,7 @@ namespace heavy_client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Connect();
-            Frame.Navigate(typeof(HomePage));
+            Connect();
         }
 
         private void Connect()
@@ -43,7 +43,7 @@ namespace heavy_client
             string username = usernameTextBox.Text;
             string password = passwordBox.Password;
 
-            string connectionString = String.Format(@"Data Source={0};Initial Catalog=cesieats;User ID={1};Password={2}",
+            string connectionString = string.Format(@"Data Source={0};Initial Catalog=cesieats;User ID={1};Password={2}",
                 data_source, username, password);
             SqlConnection cnn = new SqlConnection(connectionString);
             try
@@ -52,7 +52,7 @@ namespace heavy_client
                 if (cnn.State == System.Data.ConnectionState.Open)
                 {
                     _ = new MessageDialog("Connected").ShowAsync();
-                    (App.Current as App).ConnectionString = connectionString;
+                    (Application.Current as App).ConnectionString = connectionString;
                     cnn.Close();
                     Frame.Navigate(typeof(HomePage));
                     
