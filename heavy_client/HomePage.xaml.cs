@@ -50,9 +50,47 @@ namespace heavy_client
             // Instead of hard coded items, the data could be pulled
             // asynchronously from a database or the internet.
             const string GetUsersQuery = "SELECT Users.id, lastname, firstname," +
-                                         " email, isSuspended, UserTypes.type " +
-                                         " from Users inner join UserTypes on Users.id_UserTypes = UserTypes.id ";
+                                         " email, isSuspended, id_UserTypes FROM Users ";
+            const string GetUserTypesQuery = "SELECT UserTypes.id, UserTypes.type"+
+                                            " FROM UserTypes;";
+            GetUserTypes(_connectionString, GetUserTypesQuery);
             GetUsers(_connectionString, GetUsersQuery);
+        }
+
+        public void GetUserTypes(string connectionString, string GetUsersQuery)
+        {
+            UserTypeORMResources.UserTypes.Clear();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = GetUsersQuery;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var userType = new UserType
+                                    {
+                                        UserTypeID = reader.GetInt32(0),
+                                        Type = reader.GetString(1)
+                                    };
+                                    UserTypeORMResources.UserTypes.Add(userType);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql.Message);
+                _ = new MessageDialog("Exception: " + eSql.Message).ShowAsync();
+            }
         }
 
         public void GetUsers(string connectionString, string GetUsersQuery)
@@ -79,7 +117,7 @@ namespace heavy_client
                                         FirstName = reader.GetString(2),
                                         Email = reader.GetString(3),
                                         IsSuspended = reader.GetBoolean(4),
-                                        UserType = reader.GetString(5)
+                                        UserType = UserTypeORMResources.UserTypes.Where(x => x.UserTypeID == reader.GetInt32(5)).First()
                                     };
                                     UserORMResources.Users.Add(user);
                                 }
@@ -166,7 +204,7 @@ namespace heavy_client
                 FirstName = "test48856262",
                 Email = "test@gmail.test",
                 IsSuspended = true,
-                UserType = "Livreur"
+                UserType = new UserType { UserTypeID = 2, Type="Livreur"}
             });
         }
 

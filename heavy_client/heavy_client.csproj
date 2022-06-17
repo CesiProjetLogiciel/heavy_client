@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="ORM\Address.cs" />
     <Compile Include="ORM\Country.cs" />
+    <Compile Include="ORM\UserType.cs" />
     <Compile Include="ORM\User.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

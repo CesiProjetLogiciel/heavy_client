@@ -8,6 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <local:CountryConverter x:Key="CountryConverter"/>
+            <local:UserTypeConverter x:Key="UserTypeConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 

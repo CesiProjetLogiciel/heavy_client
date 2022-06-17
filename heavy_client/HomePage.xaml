@@ -32,7 +32,7 @@
                         <TextBlock Grid.Column="2" Text="Firstname"/>
                         <TextBlock Grid.Column="3" Text="Email address"/>
                         <TextBlock Grid.Column="4" Text="Is suspended"/>
-                        <TextBlock Grid.Column="5" Text="Type"/>
+                        <TextBlock Grid.Column="5" Text="User Type"/>
                     </Grid>
                 </DataTemplate>
             </ListView.HeaderTemplate>
@@ -53,7 +53,7 @@
                         <TextBlock Grid.Column="2" Text="{x:Bind FirstName}"/>
                         <TextBlock Grid.Column="3" Text="{x:Bind Email}"/>
                         <TextBlock Grid.Column="4" Text="{x:Bind IsSuspended, Mode=OneWay}"/>
-                        <TextBlock Grid.Column="5" Text="{x:Bind UserType}"/>
+                        <TextBlock Grid.Column="5" Text="{x:Bind UserType, Converter={StaticResource UserTypeConverter}}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

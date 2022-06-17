@@ -32,19 +32,19 @@ namespace heavy_client
     public sealed partial class UserPage : Page
     {
 
-        private readonly string _connectionString = (App.Current as App).ConnectionString;
+        private readonly string _connectionString = (Application.Current as App).ConnectionString;
         private bool _changeIsSuspendedTo = true;
 
         public User UserSelected { get; set; }
 
         string GetAddressQuery (string table)
             {
-                return String.Format("SELECT zipcode, city, address, state, " +
+                return string.Format("SELECT zipcode, city, address, state, " +
                 "additionnalInfo, t1.lastname, t1.firstname, phonenumber, t1.phonecountrycode, t1.name, t1.id " +
                 "FROM (SELECT {0}.id, zipcode, city, address, state, additionnalInfo, {0}.lastname, {0}.firstname, " +
                 "phonenumber, Countries.name, {0}.phonecountrycode, {0}.id_Users " +
                 "FROM {0} INNER JOIN Countries ON  {0}.id_Countries = Countries.id) " +
-                "AS t1 INNER JOIN Users ON t1.id_Users = Users.id ", table);
+                "AS t1 INNER JOIN Users ON t1.id_Users = Users.id WHERE Users.id = {1} ", table, UserSelected.UserID);
             }
 
         public UserPage()
@@ -184,9 +184,10 @@ namespace heavy_client
 
             query += string.Format("UPDATE Users SET Users.firstname = '{0}'," +
                 "Users.lastname = '{1}'," +
-                "Users.email = '{2}'" +
-                " WHERE Users.id = {3};", UserSelected.FirstName, UserSelected.LastName, 
-                UserSelected.Email, UserSelected.UserID);
+                "Users.email = '{2}'," +
+                "Users.id_UserTypes = {3}" +
+                " WHERE Users.id = {4};", UserSelected.FirstName, UserSelected.LastName, 
+                UserSelected.Email, UserSelected.UserType.UserTypeID, UserSelected.UserID);
 
             foreach(var address in AddressORMResources.DeliveryAddresses)
             {
