@@ -28,7 +28,7 @@ namespace heavy_client
     /// </summary>
     public sealed partial class HomePage : Page
     {
-        private readonly string _connectionString = (App.Current as App).ConnectionString;
+        private readonly string _connectionString = (Application.Current as App).ConnectionString;
         private bool _changeIsSuspendedTo = true;
 
         private ObservableCollection<User> _users = new ObservableCollection<User>();
@@ -286,7 +286,7 @@ namespace heavy_client
         private void Edit_Button_Click(object sender, RoutedEventArgs e)
         {
             User userselected = UsersListView.SelectedItem as User;
-            Frame.Navigate(typeof(UserPage), userselected.UserID);
+            Frame.Navigate(typeof(UserPage), userselected);
         }
     }
 }
