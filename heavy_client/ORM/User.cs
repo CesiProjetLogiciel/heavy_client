@@ -21,7 +21,7 @@ namespace heavy_client
         private string _firstName;
         private string _email;
         private bool _isSuspended;
-        private string _userType;
+        private UserType _userType;
 
         public int UserID { get; set; }
         public string LastName
@@ -44,7 +44,7 @@ namespace heavy_client
             get { return _isSuspended; }
             set { if (_isSuspended != value) { _isSuspended = value; NotifyPropertyChanged(); } }
         }
-        public string UserType
+        public UserType UserType
         {
             get { return _userType; }
             set { if (_userType != value) { _userType = value; NotifyPropertyChanged(); } }
