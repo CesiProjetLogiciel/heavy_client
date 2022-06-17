@@ -23,7 +23,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" TextWrapping="Wrap" Text="Delivery Address" VerticalAlignment="Top" SelectionChanged="TextBlock_SelectionChanged"/>
+            <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" TextWrapping="Wrap" Text="Delivery Address" VerticalAlignment="Top"/>
             <ListView Grid.Row="0" ItemsSource="{x:Bind DeliveryAddresses, Mode=OneWay}" x:Name="DeliveryAddressListView" Margin="0,30,0,0" SelectionChanged="DeliveryAddressListView_SelectionChanged">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -84,7 +84,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <TextBlock Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" TextWrapping="Wrap" Text="Billing Address" VerticalAlignment="Top" SelectionChanged="TextBlock_SelectionChanged"/>
+            <TextBlock Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" TextWrapping="Wrap" Text="Billing Address" VerticalAlignment="Top"/>
             <ListView Grid.Row="1" ItemsSource="{x:Bind BillingAddresses}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,35,0,0">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">

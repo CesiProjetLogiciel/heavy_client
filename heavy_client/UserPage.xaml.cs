@@ -182,11 +182,6 @@ namespace heavy_client
         {
 
         }
-
-        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 
 
