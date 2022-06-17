@@ -42,7 +42,7 @@ namespace heavy_client
                 return String.Format("SELECT zipcode, city, address, state, " +
                 "additionnalInfo, t1.lastname, t1.firstname, phonenumber, t1.phonecountrycode, t1.name, t1.id " +
                 "FROM (SELECT {0}.id, zipcode, city, address, state, additionnalInfo, {0}.lastname, {0}.firstname, " +
-                "phonenumber, Countries.name, Countries.phonecountrycode, {0}.id_Users " +
+                "phonenumber, Countries.name, {0}.phonecountrycode, {0}.id_Users " +
                 "FROM {0} INNER JOIN Countries ON  {0}.id_Countries = Countries.id) " +
                 "AS t1 INNER JOIN Users ON t1.id_Users = Users.id ", table);
             }
@@ -66,6 +66,7 @@ namespace heavy_client
 
         public void GetCountries(string connectionString)
         {
+            CountryORMResources.Countries.Clear();
             const string CountriesQuery = "SELECT id, name, phonecountrycode FROM Countries";
             try
             {
@@ -103,8 +104,8 @@ namespace heavy_client
 
         public void GetAddress(string connectionString)
         {
-            
-
+            AddressORMResources.DeliveryAddresses.Clear();
+            AddressORMResources.BillingAddresses.Clear();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -134,6 +135,7 @@ namespace heavy_client
                                         DataContext = this,
                                         AddressID = reader.GetInt32(10)
                                     };
+                                    string r = reader.GetString(8);
                                     AddressORMResources.DeliveryAddresses.Add(address);
                                 }
                             }
@@ -174,19 +176,88 @@ namespace heavy_client
             }
         }
 
-        private void GetSelectedCountry(string countrycode)
-        {
-
-        }
-
-        private void DeliveryAddressListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
-            _ = new MessageDialog(AddressORMResources.DeliveryAddresses.First().PhoneCountryCode.Name).ShowAsync();
+            const string queryStart = "SET XACT_ABORT ON;BEGIN TRANSACTION;";
+            const string queryEnd = "COMMIT;";
+            string query = "" + queryStart;
+
+            query += string.Format("UPDATE Users SET Users.firstname = '{0}'," +
+                "Users.lastname = '{1}'," +
+                "Users.email = '{2}'" +
+                " WHERE Users.id = {3};", UserSelected.FirstName, UserSelected.LastName, 
+                UserSelected.Email, UserSelected.UserID);
+
+            foreach(var address in AddressORMResources.DeliveryAddresses)
+            {
+                query += GetUpdateQueryAddresses("DeliveryAddress", address);
+            }
+            foreach (var address in AddressORMResources.BillingAddresses)
+            {
+                query += GetUpdateQueryAddresses("BillingAddress", address);
+            }
+            query += queryEnd;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = query;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    _ = new MessageDialog(reader.GetString(0)).ShowAsync();
+                                }
+                            }
+                        }
+                    }
+                }
+                _ = new MessageDialog("Changes saved.").ShowAsync();
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql.Message);
+                _ = new MessageDialog("Exception: " + eSql.Message).ShowAsync();
+            }
+        }
+
+        private string GetUpdateQueryAddresses(string table, Address address)
+        {
+            string query = string.Format("UPDATE {0} SET DeliveryAddress.zipcode = '{1}', " +
+                    "{0}.id_Countries = {2}," +
+                    "{0}.city = '{3}'," +
+                    "{0}.address = '{4}'," +
+                    "{0}.state = '{5}'," +
+                    "{0}.additionnalInfo = '{6}'," +
+                    "{0}.lastname = '{7}'," +
+                    "{0}.firstname = '{8}'," +
+                    "{0}.phonenumber = '{9}'," +
+                    "{0}.phonecountrycode = '{10}'" +
+                    " WHERE {0}.id = {11};",
+                    table,
+                    address.Zipcode,
+                    address.CountryName.CountryID,
+                    address.City,
+                    address.Street,
+                    address.State,
+                    address.AdditionnalInfo,
+                    address.Lastname,
+                    address.Firstname,
+                    address.PhoneNumber,
+                    address.PhoneCountryCode.PhoneCountryCode,
+                    address.AddressID);
+            return query;
+        }
+
+        private void Quit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(HomePage));
         }
     }
 

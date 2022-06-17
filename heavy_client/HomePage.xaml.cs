@@ -126,7 +126,7 @@ namespace heavy_client
         {
             User user = UsersListView.SelectedItem as User;
             Disable_Button.Focus(FocusState.Pointer); //made the button get focus.
-            string SetIsSuspendedQuery = String.Format("SET XACT_ABORT ON;BEGIN TRANSACTION;UPDATE Users SET Users.isSuspended = {0} WHERE Users.id = {1};COMMIT;", _changeIsSuspendedTo ? 1 : 0, user.UserID);
+            string SetIsSuspendedQuery = string.Format("SET XACT_ABORT ON;BEGIN TRANSACTION;UPDATE Users SET Users.isSuspended = {0} WHERE Users.id = {1};COMMIT;", _changeIsSuspendedTo ? 1 : 0, user.UserID);
             try
             {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
