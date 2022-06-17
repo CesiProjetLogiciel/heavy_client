@@ -1,13 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace heavy_client
 {
+    public static class AddressORMResources
+    {
+        private static ObservableCollection<Address> _deliveryAddresses = new ObservableCollection<Address>();
+        public static ObservableCollection<Address> DeliveryAddresses { get => _deliveryAddresses; set => _deliveryAddresses = value; }
+        private static ObservableCollection<Address> _billingAddresses = new ObservableCollection<Address>();
+        public static ObservableCollection<Address> BillingAddresses { get => _billingAddresses; set => _billingAddresses = value; }
+    }
+
     public class Address : INotifyPropertyChanged
     {
         private string _zipcode;
@@ -17,10 +27,12 @@ namespace heavy_client
         private string _additionnalInfo;
         private string _lastname;
         private string _firstname;
-        private string _countryName;
+        private Country _countryName;
         private string _phoneNumber;
-        private string _phoneCountryCode;
+        private Country _phoneCountryCode;
 
+        public Page DataContext { get; set; }
+        
         public int UserID { get; set; }
         public int AddressID { get; set; }
         public string Zipcode
@@ -58,7 +70,7 @@ namespace heavy_client
             get { return _firstname; }
             set { if (_firstname != value) { _firstname = value; NotifyPropertyChanged(); } }
         }
-        public string PhoneCountryCode
+        public Country PhoneCountryCode
         {
             get { return _phoneCountryCode; }
             set { if (_phoneCountryCode != value) { _phoneCountryCode = value; NotifyPropertyChanged(); } }
@@ -68,7 +80,7 @@ namespace heavy_client
             get { return _phoneNumber; }
             set { if (_phoneNumber != value) { _phoneNumber = value; NotifyPropertyChanged(); } }
         }
-        public string CountryName
+        public Country CountryName
         {
             get { return _countryName; }
             set { if (_countryName != value) { _countryName = value; NotifyPropertyChanged(); } }

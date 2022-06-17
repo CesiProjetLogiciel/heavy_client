@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,6 +9,12 @@ using System.Threading.Tasks;
 
 namespace heavy_client
 {
+    public static class UserORMResources
+    {
+        private static ObservableCollection<User> _users = new ObservableCollection<User>();
+        public static ObservableCollection<User> Users { get => _users; set => _users = value; }
+    }
+
     public class User : INotifyPropertyChanged
     {
         private string _lastName;
