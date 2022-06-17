@@ -16,7 +16,7 @@
         <TextBox x:Name="lastname" HorizontalAlignment="Stretch" Height="32" Margin="25,142,25,0" FontSize="15" TextWrapping="Wrap" Text="{x:Bind UserSelected.LastName, Mode=TwoWay}" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
         <TextBlock HorizontalAlignment="Stretch" Height="24" Margin="25,179,25,0" FontSize="15" TextWrapping="Wrap" Text="User email :" VerticalAlignment="Top"/>
         <TextBox x:Name="email" HorizontalAlignment="Stretch" Height="32" Margin="25,204,25,0" FontSize="15" TextWrapping="Wrap" Text="{x:Bind UserSelected.Email, Mode=TwoWay}" VerticalAlignment="Top"/>
-        <Button HorizontalAlignment="Right" x:Name="Quit_Button" Content="Quit" FontSize="11" Margin="477,14,25,0" Padding="0,0,0,0" VerticalAlignment="Top" Height="22" Width="33"/>
+        <Button HorizontalAlignment="Right" x:Name="Quit_Button" Content="Quit" FontSize="11" Margin="477,14,25,0" Padding="0,0,0,0" VerticalAlignment="Top" Height="22" Width="33" Click="Quit_Button_Click"/>
         <Button HorizontalAlignment="Right" x:Name="Save_Button" Content="Save" FontSize="11" Margin="426,14,68,0" Padding="0,0,0,0" VerticalAlignment="Top" Height="22" Width="33"/>
         <Grid Margin="25,275,25,10">
             <Grid.RowDefinitions>

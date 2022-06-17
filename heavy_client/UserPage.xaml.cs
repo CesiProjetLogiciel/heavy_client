@@ -182,6 +182,11 @@ namespace heavy_client
         {
 
         }
+
+        private void Quit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(HomePage));
+        }
     }
 
 
