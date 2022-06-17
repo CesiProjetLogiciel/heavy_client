@@ -5,4 +5,10 @@
     xmlns:local="using:heavy_client"
     >
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <local:CountryConverter x:Key="CountryConverter"/>
+        </ResourceDictionary>
+    </Application.Resources>
+
 </Application>

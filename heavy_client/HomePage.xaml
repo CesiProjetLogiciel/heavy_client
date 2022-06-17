@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <ListView ItemsSource="{x:Bind Users, Mode=OneWay}" x:Name="UsersListView" Margin="25,145,25,25" SelectionChanged="UsersListView_SelectionChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListView ItemsSource="{x:Bind local:UserORMResources.Users, Mode=OneWay}" x:Name="UsersListView" Margin="25,145,25,25" SelectionChanged="UsersListView_SelectionChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

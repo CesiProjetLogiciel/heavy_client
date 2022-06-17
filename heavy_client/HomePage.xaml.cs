@@ -31,9 +31,6 @@ namespace heavy_client
         private readonly string _connectionString = (Application.Current as App).ConnectionString;
         private bool _changeIsSuspendedTo = true;
 
-        private ObservableCollection<User> _users = new ObservableCollection<User>();
-        public ObservableCollection<User> Users { get => _users; set => _users = value; }
-
         public HomePage()
         {
             InitializeComponent();
@@ -60,7 +57,7 @@ namespace heavy_client
 
         public void GetUsers(string connectionString, string GetUsersQuery)
         {
-            Users.Clear();
+            UserORMResources.Users.Clear();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -84,7 +81,7 @@ namespace heavy_client
                                         IsSuspended = reader.GetBoolean(4),
                                         UserType = reader.GetString(5)
                                     };
-                                    Users.Add(user);
+                                    UserORMResources.Users.Add(user);
                                 }
                             }
                         }
@@ -162,7 +159,7 @@ namespace heavy_client
 
         private void add_Button_Click(object sender, RoutedEventArgs e)
         {
-            Users.Add(new User
+            UserORMResources.Users.Add(new User
             {
                 UserID = 5,
                 LastName = "Test",
@@ -179,7 +176,7 @@ namespace heavy_client
 
             string csv = "ID,Lastname,Firstname,Email Address,Is suspended,Type;\n";
 
-            foreach (User user in Users)
+            foreach (User user in UserORMResources.Users)
             {
                 string last = user.GetType().GetProperties().Last().GetValue(user, null).ToString();
                 foreach (PropertyInfo prop in user.GetType().GetProperties())
@@ -260,7 +257,7 @@ namespace heavy_client
                         }
                     }
                 }
-                Users.Remove(user);
+                UserORMResources.Users.Remove(user);
             }
             catch (Exception eSql)
             {
@@ -283,10 +280,8 @@ namespace heavy_client
             GetUsers(_connectionString, SetSearchQuery);
         }
 
-        private void Edit_Button_Click(object sender, RoutedEventArgs e)
-        {
-            User userselected = UsersListView.SelectedItem as User;
-            Frame.Navigate(typeof(UserPage), userselected);
-        }
+        private void Edit_Button_Click(object sender, RoutedEventArgs e) => 
+            Frame.Navigate(typeof(UserPage), UsersListView.SelectedItem);
+
     }
 }

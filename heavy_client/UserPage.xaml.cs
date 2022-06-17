@@ -37,23 +37,14 @@ namespace heavy_client
 
         public User UserSelected { get; set; }
 
-        private ObservableCollection<Address> _deliveryAddresses = new ObservableCollection<Address>();
-        private ObservableCollection<Address> _billingAddresses = new ObservableCollection<Address>();
-        public ObservableCollection<Address> DeliveryAddresses { get => _deliveryAddresses; set => _deliveryAddresses = value; }
-        public ObservableCollection<Address> BillingAddresses { get => _billingAddresses; set => _billingAddresses = value; }
-        
-        private ObservableCollection<Country> _countries = new ObservableCollection<Country>();
-        public ObservableCollection<Country> Countries { get => _countries; set => _countries = value; }
-
-
         string GetAddressQuery (string table)
             {
                 return String.Format("SELECT zipcode, city, address, state, " +
-                "additionnalInfo, t1.lastname, t1.firstname, phonenumber, t1.phonecountrycode, t1.countryname " +
-                "FROM (SELECT zipcode, city, address, state, additionnalInfo, {0}.lastname, {0}.firstname, " +
-                "phonenumber, Countries.countryname, Countries.phonecountrycode, {0}.id_Users " +
+                "additionnalInfo, t1.lastname, t1.firstname, phonenumber, t1.phonecountrycode, t1.name, t1.id " +
+                "FROM (SELECT {0}.id, zipcode, city, address, state, additionnalInfo, {0}.lastname, {0}.firstname, " +
+                "phonenumber, Countries.name, Countries.phonecountrycode, {0}.id_Users " +
                 "FROM {0} INNER JOIN Countries ON  {0}.id_Countries = Countries.id) " +
-                "AS t1 INNER JOIN Users ON {0}.id_Users = Users.id ", table);
+                "AS t1 INNER JOIN Users ON t1.id_Users = Users.id ", table);
             }
 
         public UserPage()
@@ -70,6 +61,7 @@ namespace heavy_client
             // Instead of hard coded items, the data could be pulled
             // asynchronously from a database or the internet.
             GetCountries(_connectionString);
+            GetAddress(_connectionString);
         }
 
         public void GetCountries(string connectionString)
@@ -95,7 +87,7 @@ namespace heavy_client
                                         Name = reader.GetString(1),
                                         PhoneCountryCode = reader.GetString(2),
                                     };
-                                    Countries.Add(country);
+                                    CountryORMResources.Countries.Add(country);
                                 }
                             }
                         }
@@ -137,10 +129,12 @@ namespace heavy_client
                                         Lastname = reader.GetString(5),
                                         Firstname = reader.GetString(6),
                                         PhoneNumber = reader.GetString(7),
-                                        PhoneCountryCode = reader.GetString(8),
-                                        CountryName = reader.GetString(9),
+                                        PhoneCountryCode = CountryORMResources.Countries.Where(x => x.PhoneCountryCode == reader.GetString(8)).First(),
+                                        CountryName = CountryORMResources.Countries.Where(x => x.Name == reader.GetString(9)).First(),
+                                        DataContext = this,
+                                        AddressID = reader.GetInt32(10)
                                     };
-                                    DeliveryAddresses.Add(address);
+                                    AddressORMResources.DeliveryAddresses.Add(address);
                                 }
                             }
                         }
@@ -161,10 +155,12 @@ namespace heavy_client
                                         Lastname = reader.GetString(5),
                                         Firstname = reader.GetString(6),
                                         PhoneNumber = reader.GetString(7),
-                                        PhoneCountryCode = reader.GetString(8),
-                                        CountryName = reader.GetString(9),
+                                        PhoneCountryCode = CountryORMResources.Countries.Where(x => x.PhoneCountryCode == reader.GetString(8)).First(),
+                                        CountryName = CountryORMResources.Countries.Where(x => x.Name == reader.GetString(9)).First(),
+                                        DataContext = this,
+                                        AddressID = reader.GetInt32(10)
                                     };
-                                    BillingAddresses.Add(address);
+                                    AddressORMResources.BillingAddresses.Add(address);
                                 }
                             }
                         }
@@ -178,9 +174,19 @@ namespace heavy_client
             }
         }
 
+        private void GetSelectedCountry(string countrycode)
+        {
+
+        }
+
         private void DeliveryAddressListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Save_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _ = new MessageDialog(AddressORMResources.DeliveryAddresses.First().PhoneCountryCode.Name).ShowAsync();
         }
     }
 
