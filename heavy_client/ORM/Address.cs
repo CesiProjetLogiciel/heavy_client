@@ -22,6 +22,7 @@ namespace heavy_client
         private string _phoneCountryCode;
 
         public int UserID { get; set; }
+        public int AddressID { get; set; }
         public string Zipcode
         {
             get { return _zipcode; }
