@@ -35,15 +35,21 @@ namespace heavy_client
         private readonly string _connectionString = (App.Current as App).ConnectionString;
         private bool _changeIsSuspendedTo = true;
 
+        public User UserSelected { get; set; }
+
         private ObservableCollection<Address> _deliveryAddresses = new ObservableCollection<Address>();
         private ObservableCollection<Address> _billingAddresses = new ObservableCollection<Address>();
         public ObservableCollection<Address> DeliveryAddresses { get => _deliveryAddresses; set => _deliveryAddresses = value; }
         public ObservableCollection<Address> BillingAddresses { get => _billingAddresses; set => _billingAddresses = value; }
+        
+        private ObservableCollection<Country> _countries = new ObservableCollection<Country>();
+        public ObservableCollection<Country> Countries { get => _countries; set => _countries = value; }
+
 
         string GetAddressQuery (string table)
             {
                 return String.Format("SELECT zipcode, city, address, state, " +
-                "additionnalInfo, t1.lastname, t1.firstname, phonenumber, Countries.countryname, Countries.phonecountrycode " +
+                "additionnalInfo, t1.lastname, t1.firstname, phonenumber, t1.phonecountrycode, t1.countryname " +
                 "FROM (SELECT zipcode, city, address, state, additionnalInfo, {0}.lastname, {0}.firstname, " +
                 "phonenumber, Countries.countryname, Countries.phonecountrycode, {0}.id_Users " +
                 "FROM {0} INNER JOIN Countries ON  {0}.id_Countries = Countries.id) " +
@@ -53,6 +59,54 @@ namespace heavy_client
         public UserPage()
         {
             InitializeComponent();
+        }
+
+        // Define this method within your main page class.
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            UserSelected = e.Parameter as User;
+
+            // Instead of hard coded items, the data could be pulled
+            // asynchronously from a database or the internet.
+            GetCountries(_connectionString);
+        }
+
+        public void GetCountries(string connectionString)
+        {
+            const string CountriesQuery = "SELECT id, name, phonecountrycode FROM Countries";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = CountriesQuery;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var country = new Country
+                                    {
+                                        CountryID = reader.GetInt32(0),
+                                        Name = reader.GetString(1),
+                                        PhoneCountryCode = reader.GetString(2),
+                                    };
+                                    Countries.Add(country);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql.Message);
+                _ = new MessageDialog("Exception: " + eSql.Message).ShowAsync();
+            }
         }
 
         public void GetAddress(string connectionString)
@@ -83,7 +137,8 @@ namespace heavy_client
                                         Lastname = reader.GetString(5),
                                         Firstname = reader.GetString(6),
                                         PhoneNumber = reader.GetString(7),
-                                        Country = new Country(reader.GetString(8), reader.GetString(9))
+                                        PhoneCountryCode = reader.GetString(8),
+                                        CountryName = reader.GetString(9),
                                     };
                                     DeliveryAddresses.Add(address);
                                 }
@@ -106,7 +161,8 @@ namespace heavy_client
                                         Lastname = reader.GetString(5),
                                         Firstname = reader.GetString(6),
                                         PhoneNumber = reader.GetString(7),
-                                        Country = new Country(reader.GetString(8), reader.GetString(9))
+                                        PhoneCountryCode = reader.GetString(8),
+                                        CountryName = reader.GetString(9),
                                     };
                                     BillingAddresses.Add(address);
                                 }
@@ -122,6 +178,15 @@ namespace heavy_client
             }
         }
 
+        private void DeliveryAddressListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 
