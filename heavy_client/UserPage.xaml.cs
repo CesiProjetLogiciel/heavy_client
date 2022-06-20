@@ -35,19 +35,18 @@ namespace heavy_client
         private readonly string _connectionString = (Application.Current as App).ConnectionString;
         private bool _changeIsSuspendedTo = true;
 
+        private static string[] _isPaypalAllowed = { "restaurant", "livreur" };
+
         public User UserSelected { get; set; }
+
+        public static bool IsPaypalAllowed(User user)
+        {
+            return _isPaypalAllowed.Contains(user.UserType.Type.ToLower());
+        }
 
         public static Visibility IsVisible(User user)
         {
-            if (user.UserType.Type.ToLower() == "Restaurant".ToLower() || 
-                user.UserType.Type.ToLower() == "Livreur".ToLower())
-            {
-                return Visibility.Visible;
-            }
-            else
-            {
-                return Visibility.Collapsed;
-            }
+            return IsPaypalAllowed(user) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         string GetAddressQuery (string table)
@@ -200,7 +199,7 @@ namespace heavy_client
                 " WHERE Users.id = {4};", UserSelected.FirstName, UserSelected.LastName, 
                 UserSelected.Email, UserSelected.UserType.UserTypeID, UserSelected.UserID);
 
-            query += GetQueryPaypal(UserSelected);
+            query = IsPaypalAllowed(UserSelected) ? query + GetQueryPaypal(UserSelected) : query;
 
             foreach(var address in AddressORMResources.DeliveryAddresses)
             {
@@ -281,7 +280,7 @@ namespace heavy_client
 
         private string GetUpdateQueryAddresses(string table, Address address)
         {
-            string query = string.Format("UPDATE {0} SET DeliveryAddress.zipcode = '{1}', " +
+            string query = string.Format("UPDATE {0} SET {0}.zipcode = '{1}', " +
                     "{0}.id_Countries = {2}," +
                     "{0}.city = '{3}'," +
                     "{0}.address = '{4}'," +
@@ -346,6 +345,67 @@ namespace heavy_client
             {
                 AddressORMResources.BillingAddresses.Add(new_address);
             }
+        }
+
+        private void Delete_Address_Button_Click(object sender, RoutedEventArgs e)
+        {
+            string table = null;
+            Address address = null;
+            ObservableCollection<Address> collection = null;
+            if (((Button)sender).Name == "DeleteDeliveryAddress")
+            {
+                table = "DeliveryAddress";
+                address = DeliveryAddressListView.SelectedItem as Address;
+                collection = AddressORMResources.DeliveryAddresses;
+            }
+            else if (((Button)sender).Name == "DeleteBillingAddress")
+            {
+                table = "BillingAddress";
+                address = BillingAddressListView.SelectedItem as Address;
+                collection = AddressORMResources.BillingAddresses;
+            }
+            ((Button)sender).Focus(FocusState.Pointer); //made the button get focus.
+            string SetDeleteQuery = "SET XACT_ABORT ON;" +
+                                    "BEGIN TRANSACTION;" +
+                                    string.Format("DELETE FROM {0} WHERE {0}.id = {1};", 
+                                    table, address.AddressID)+
+                                    "COMMIT;";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = SetDeleteQuery;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    _ = new MessageDialog(reader.GetString(0)).ShowAsync();
+                                }
+                            }
+                        }
+                    }
+                }
+                collection.Remove(address);
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql.Message);
+                _ = new MessageDialog("Exception: " + eSql.Message).ShowAsync();
+            }
+        }
+
+        private void AddressListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListView listview = sender as ListView;
+            if (listview.Name == "DeliveryAddressListView")
+                DeleteDeliveryAddress.IsEnabled = listview.SelectedItem != null;
+            else if (listview.Name == "BillingAddressListView")
+                DeleteBillingAddress.IsEnabled = listview.SelectedItem != null;
         }
     }
 }

@@ -160,9 +160,7 @@ namespace heavy_client
                 }
             }
             else
-            {
                 Disable_Button.IsEnabled = false;
-            }
         }
 
         private void Disable_Button_Click(object sender, RoutedEventArgs e)
