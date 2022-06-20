@@ -33,9 +33,7 @@ namespace heavy_client
     {
 
         private readonly string _connectionString = (Application.Current as App).ConnectionString;
-        private bool _changeIsSuspendedTo = true;
-
-        private static string[] _isPaypalAllowed = { "restaurant", "livreur" };
+        private static readonly string[] _isPaypalAllowed = { "restaurant", "livreur" };
 
         public User UserSelected { get; set; }
 
