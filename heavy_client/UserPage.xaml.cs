@@ -132,7 +132,6 @@ namespace heavy_client
                                         PhoneNumber = reader.GetString(7),
                                         PhoneCountryCode = CountryORMResources.Countries.Where(x => x.PhoneCountryCode == reader.GetString(8)).First(),
                                         CountryName = CountryORMResources.Countries.Where(x => x.Name == reader.GetString(9)).First(),
-                                        DataContext = this,
                                         AddressID = reader.GetInt32(10)
                                     };
                                     string r = reader.GetString(8);
@@ -159,7 +158,6 @@ namespace heavy_client
                                         PhoneNumber = reader.GetString(7),
                                         PhoneCountryCode = CountryORMResources.Countries.Where(x => x.PhoneCountryCode == reader.GetString(8)).First(),
                                         CountryName = CountryORMResources.Countries.Where(x => x.Name == reader.GetString(9)).First(),
-                                        DataContext = this,
                                         AddressID = reader.GetInt32(10)
                                     };
                                     AddressORMResources.BillingAddresses.Add(address);
@@ -191,11 +189,11 @@ namespace heavy_client
 
             foreach(var address in AddressORMResources.DeliveryAddresses)
             {
-                query += GetUpdateQueryAddresses("DeliveryAddress", address);
+                query += GetQueryAddresses("DeliveryAddress", address);
             }
             foreach (var address in AddressORMResources.BillingAddresses)
             {
-                query += GetUpdateQueryAddresses("BillingAddress", address);
+                query += GetQueryAddresses("BillingAddress", address);
             }
             query += queryEnd;
 
@@ -219,12 +217,24 @@ namespace heavy_client
                         }
                     }
                 }
-                _ = new MessageDialog("Changes saved.").ShowAsync();
+                _ = new MessageDialog("Changes saved successfully.").ShowAsync();
             }
             catch (Exception eSql)
             {
                 Debug.WriteLine("Exception: " + eSql.Message);
                 _ = new MessageDialog("Exception: " + eSql.Message).ShowAsync();
+            }
+        }
+
+        private string GetQueryAddresses(string table, Address address)
+        {
+            if (address.IsRegistered)
+            {
+                return GetUpdateQueryAddresses(table, address);
+            }
+            else
+            {
+                return GetInsertQueryAddresses(table, address);
             }
         }
 
@@ -256,32 +266,45 @@ namespace heavy_client
             return query;
         }
 
+        private string GetInsertQueryAddresses(string table, Address address)
+        {
+            string query = string.Format("INSERT INTO {0} VALUES ('{1}','{2}','{3}','{4}','{5}'," +
+                    "'{6}','{7}','{8}','{9}',{10},{11});",
+                    table,
+                    address.Zipcode,
+                    address.City,
+                    address.Street,
+                    address.State,
+                    address.AdditionnalInfo,
+                    address.Lastname,
+                    address.Firstname,
+                    address.PhoneNumber,
+                    address.PhoneCountryCode.PhoneCountryCode,
+                    address.CountryName.CountryID,
+                    address.UserID);
+            return query;
+        }
+
         private void Quit_Button_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(HomePage));
         }
-    }
 
-
-
-    public class Customer : INotifyPropertyChanged
-    {
-        private string _name;
-        public string Name
+        private void Add_Address_Button_Click(object sender, RoutedEventArgs e)
         {
-            get => _name;
-            set
+            Address new_address = new Address
             {
-                if (_name != value)
-                {
-                    _name = value;
-                    this.OnPropertyChanged();
-                }
+                UserID = UserSelected.UserID,
+                IsRegistered = false
+            };
+            if (((Button)sender).Name == "AddDeliveryAddress")
+            {
+                AddressORMResources.DeliveryAddresses.Add(new_address);
+            }
+            else if (((Button)sender).Name == "AddBillingAddress")
+            {
+                AddressORMResources.BillingAddresses.Add(new_address);
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
