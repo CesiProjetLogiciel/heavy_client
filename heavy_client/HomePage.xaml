@@ -58,7 +58,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBox Margin="25,37,25,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="31" Width="auto" TextChanged="SearchBar_TextChanged"/>
+        <TextBox Margin="25,37,25,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="31" Width="auto" TextChanged="SearchBar_TextChanged" PlaceholderText="Search..."/>
         <Grid Margin="0,0,15,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

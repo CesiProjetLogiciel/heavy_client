@@ -270,10 +270,10 @@ namespace heavy_client
             Disable_Button.Focus(FocusState.Pointer); //made the button get focus.
             string SetDeleteQuery = "SET XACT_ABORT ON;" +
                                     "BEGIN TRANSACTION;" +
-                                    String.Format("DELETE FROM BillingAddress WHERE BillingAddress.id_Users = {0};", user.UserID) +
-                                    String.Format("DELETE FROM DeliveryAddress WHERE DeliveryAddress.id_Users = {0};", user.UserID) +
-                                    String.Format("DELETE FROM paypalAddress WHERE paypalAddress.id_Users = {0};", user.UserID) +
-                                    String.Format("DELETE FROM Users WHERE Users.id = {0};", user.UserID) +
+                                    string.Format("DELETE FROM BillingAddress WHERE BillingAddress.id_Users = {0};", user.UserID) +
+                                    string.Format("DELETE FROM DeliveryAddress WHERE DeliveryAddress.id_Users = {0};", user.UserID) +
+                                    string.Format("DELETE FROM paypalAddress WHERE paypalAddress.id_Users = {0};", user.UserID) +
+                                    string.Format("DELETE FROM Users WHERE Users.id = {0};", user.UserID) +
                                     "COMMIT;";
             try
             {
@@ -312,9 +312,9 @@ namespace heavy_client
             //                             " email, isSuspended, UserTypes.type " +
             //                             " from Users inner join UserTypes on Users.id_UserTypes = UserTypes.id ";
             //}
-            string SetSearchQuery = "SELECT Users.id, Users.lastname, Users.firstname, Users.email, Users.isSuspended, UserTypes.type " +
-                                    "FROM Users INNER JOIN UserTypes ON Users.id_UserTypes = UserTypes.id " +
-                                    String.Format("WHERE Users.lastname LIKE '%{0}%' OR Users.firstname LIKE '%{0}%' OR Users.email LIKE '%{0}%'", SearchBar.Text);
+            string SetSearchQuery = "SELECT Users.id, Users.lastname, Users.firstname, Users.email, Users.isSuspended, Users.id_UserTypes " +
+                                    "FROM Users " +
+                                    string.Format("WHERE Users.lastname LIKE '%{0}%' OR Users.firstname LIKE '%{0}%' OR Users.email LIKE '%{0}%'", ((TextBox)sender).Text);
             GetUsers(_connectionString, SetSearchQuery);
         }
 

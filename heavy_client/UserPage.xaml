@@ -11,16 +11,16 @@
     <Grid x:DefaultBindMode="TwoWay">
         <TextBlock HorizontalAlignment="Left" Margin="25,18,0,0" FontSize="25" FontWeight="Bold" TextWrapping="Wrap" Text="User Page" VerticalAlignment="Top" Width="142"/>
         <TextBlock HorizontalAlignment="Left" Height="27" Margin="25,56,0,0" FontSize="15" TextWrapping="Wrap" Text="User First Name :" VerticalAlignment="Top" Width="154"/>
-        <TextBox x:Name="firstname" HorizontalAlignment="Stretch" Height="32" Margin="25,80,25,0" FontSize="15" TextWrapping="Wrap" Text="{x:Bind UserSelected.FirstName, Mode=TwoWay}" VerticalAlignment="Top" />
+        <TextBox x:Name="firstname" PlaceholderText="John" HorizontalAlignment="Stretch" Height="32" Margin="25,80,25,0" FontSize="15" TextWrapping="Wrap" Text="{x:Bind UserSelected.FirstName, Mode=TwoWay}" VerticalAlignment="Top" />
         <TextBlock HorizontalAlignment="Stretch" Height="23" Margin="25,117,25,0" FontSize="15" TextWrapping="Wrap" Text="User Last Name :" VerticalAlignment="Top" />
-        <TextBox x:Name="lastname" HorizontalAlignment="Stretch" Height="32" Margin="25,142,25,0" FontSize="15" TextWrapping="Wrap" Text="{x:Bind UserSelected.LastName, Mode=TwoWay}" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
+        <TextBox x:Name="lastname" PlaceholderText="Doe" HorizontalAlignment="Stretch" Height="32" Margin="25,142,25,0" FontSize="15" TextWrapping="Wrap" Text="{x:Bind UserSelected.LastName, Mode=TwoWay}" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
         <TextBlock HorizontalAlignment="Stretch" Height="24" Margin="25,179,25,0" FontSize="15" TextWrapping="Wrap" Text="User email :" VerticalAlignment="Top"/>
         <Grid Margin="25,204,25,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" x:Name="email" HorizontalAlignment="Stretch" Height="32" Margin="0,0,5,0" FontSize="15" TextWrapping="Wrap" Text="{x:Bind UserSelected.Email, Mode=TwoWay}" VerticalAlignment="Top"/>
+            <TextBox Grid.Column="0" x:Name="email" PlaceholderText="john.doe@fakemail.com" HorizontalAlignment="Stretch" Height="32" Margin="0,0,5,0" FontSize="15" TextWrapping="Wrap" Text="{x:Bind UserSelected.Email, Mode=TwoWay}" VerticalAlignment="Top"/>
             <ComboBox Margin="0,0,5,0" HorizontalAlignment="Stretch" Grid.Column="1" ItemsSource="{x:Bind local:UserTypeORMResources.UserTypes, Converter={StaticResource UserTypeConverter}}"  SelectedItem="{x:Bind UserSelected.UserType, Converter={StaticResource UserTypeConverter}}"/>
         </Grid>
         <Button HorizontalAlignment="Right" x:Name="Quit_Button" Content="Quit" FontSize="11" Margin="477,14,25,0" Padding="0,0,0,0" VerticalAlignment="Top" Height="22" Width="33" Click="Quit_Button_Click"/>
@@ -82,15 +82,15 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBox Grid.Column="0" Text="{x:Bind Zipcode}"/>
+                            <TextBox Grid.Column="0" PlaceholderText="Zipcode" Text="{x:Bind Zipcode}"/>
                             <ComboBox HorizontalAlignment="Stretch" Grid.Column="1" ItemsSource="{x:Bind local:CountryORMResources.Countries, Converter={StaticResource CountryConverter},ConverterParameter='name'}"  SelectedItem="{x:Bind CountryName, Converter={StaticResource CountryConverter},ConverterParameter='name'}"/>
-                            <TextBox Grid.Column="2" Text="{x:Bind City}"/>
-                            <TextBox Grid.Column="3" Text="{x:Bind Street}"/>
-                            <TextBox Grid.Column="4" Text="{x:Bind State}"/>
-                            <TextBox Grid.Column="5" Text="{x:Bind AdditionnalInfo}"/>
-                            <TextBox Grid.Column="6" Text="{x:Bind Lastname}"/>
-                            <TextBox Grid.Column="7" Text="{x:Bind Firstname}"/>
-                            <TextBox Grid.Column="8" Text="{x:Bind PhoneNumber}"/>
+                            <TextBox Grid.Column="2" PlaceholderText="City" Text="{x:Bind City}"/>
+                            <TextBox Grid.Column="3" PlaceholderText="Street" Text="{x:Bind Street}"/>
+                            <TextBox Grid.Column="4" PlaceholderText="State" Text="{x:Bind State}"/>
+                            <TextBox Grid.Column="5" PlaceholderText="More..." Text="{x:Bind AdditionnalInfo}"/>
+                            <TextBox Grid.Column="6" PlaceholderText="Lastname" Text="{x:Bind Lastname}"/>
+                            <TextBox Grid.Column="7" PlaceholderText="Firstname" Text="{x:Bind Firstname}"/>
+                            <TextBox Grid.Column="8" PlaceholderText="Phone Number" Text="{x:Bind PhoneNumber}"/>
                             <ComboBox HorizontalAlignment="Stretch" Grid.Column="9" ItemsSource="{x:Bind local:CountryORMResources.Countries, Converter={StaticResource CountryConverter},ConverterParameter='all'}"  SelectedItem="{x:Bind PhoneCountryCode, Converter={StaticResource CountryConverter},ConverterParameter='all'}"/>
                         </Grid>
                     </DataTemplate>
@@ -120,15 +120,15 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBox Grid.Column="0" Text="{x:Bind Zipcode}"/>
+                            <TextBox Grid.Column="0" PlaceholderText="Zipcode" Text="{x:Bind Zipcode}"/>
                             <ComboBox HorizontalAlignment="Stretch" Grid.Column="1" ItemsSource="{x:Bind local:CountryORMResources.Countries, Converter={StaticResource CountryConverter},ConverterParameter='name'}"  SelectedItem="{x:Bind CountryName, Converter={StaticResource CountryConverter},ConverterParameter='name'}"/>
-                            <TextBox Grid.Column="2" Text="{x:Bind City}"/>
-                            <TextBox Grid.Column="3" Text="{x:Bind Street}"/>
-                            <TextBox Grid.Column="4" Text="{x:Bind State}"/>
-                            <TextBox Grid.Column="5" Text="{x:Bind AdditionnalInfo}"/>
-                            <TextBox Grid.Column="6" Text="{x:Bind Lastname}"/>
-                            <TextBox Grid.Column="7" Text="{x:Bind Firstname}"/>
-                            <TextBox Grid.Column="8" Text="{x:Bind PhoneNumber}"/>
+                            <TextBox Grid.Column="2" PlaceholderText="City" Text="{x:Bind City}"/>
+                            <TextBox Grid.Column="3" PlaceholderText="Street" Text="{x:Bind Street}"/>
+                            <TextBox Grid.Column="4" PlaceholderText="State" Text="{x:Bind State}"/>
+                            <TextBox Grid.Column="5" PlaceholderText="More..." Text="{x:Bind AdditionnalInfo}"/>
+                            <TextBox Grid.Column="6" PlaceholderText="Lastname" Text="{x:Bind Lastname}"/>
+                            <TextBox Grid.Column="7" PlaceholderText="Firstname" Text="{x:Bind Firstname}"/>
+                            <TextBox Grid.Column="8" PlaceholderText="Phone Number" Text="{x:Bind PhoneNumber}"/>
                             <ComboBox HorizontalAlignment="Stretch" Grid.Column="9" ItemsSource="{x:Bind local:CountryORMResources.Countries, Converter={StaticResource CountryConverter},ConverterParameter='all'}"  SelectedItem="{x:Bind PhoneCountryCode, Converter={StaticResource CountryConverter},ConverterParameter='all'}"/>
                         </Grid>
                     </DataTemplate>
