@@ -31,6 +31,10 @@ namespace heavy_client
         private readonly string _connectionString = (Application.Current as App).ConnectionString;
         private bool _changeIsSuspendedTo = true;
 
+        const string GetUsersQuery = "SELECT Users.id, lastname, firstname," +
+                                         " email, isSuspended, id_UserTypes, paypalAddress.id, paypalAddress.paypal" +
+                                         " FROM Users LEFT JOIN paypalAddress ON Users.id=paypalAddress.id_Users";
+
         public HomePage()
         {
             InitializeComponent();
@@ -49,9 +53,6 @@ namespace heavy_client
 
             // Instead of hard coded items, the data could be pulled
             // asynchronously from a database or the internet.
-            const string GetUsersQuery = "SELECT Users.id, lastname, firstname," +
-                                         " email, isSuspended, id_UserTypes, paypalAddress.id, paypalAddress.paypal" +
-                                         " FROM Users LEFT JOIN paypalAddress ON Users.id=paypalAddress.id_Users";
             const string GetUserTypesQuery = "SELECT UserTypes.id, UserTypes.type"+
                                             " FROM UserTypes;";
             GetUserTypes(_connectionString, GetUserTypesQuery);
@@ -312,9 +313,8 @@ namespace heavy_client
             //                             " email, isSuspended, UserTypes.type " +
             //                             " from Users inner join UserTypes on Users.id_UserTypes = UserTypes.id ";
             //}
-            string SetSearchQuery = "SELECT Users.id, Users.lastname, Users.firstname, Users.email, Users.isSuspended, Users.id_UserTypes " +
-                                    "FROM Users " +
-                                    string.Format("WHERE Users.lastname LIKE '%{0}%' OR Users.firstname LIKE '%{0}%' OR Users.email LIKE '%{0}%'", ((TextBox)sender).Text);
+            string SetSearchQuery = GetUsersQuery +
+                                    string.Format(" WHERE Users.lastname LIKE '%{0}%' OR Users.firstname LIKE '%{0}%' OR Users.email LIKE '%{0}%'", ((TextBox)sender).Text);
             GetUsers(_connectionString, SetSearchQuery);
         }
 
