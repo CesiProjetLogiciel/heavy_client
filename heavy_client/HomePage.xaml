@@ -66,14 +66,12 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="22,119,0,0" TextWrapping="Wrap" Text="Users List:" VerticalAlignment="Top" Width="auto"/>
             <Button Grid.Column="1" HorizontalAlignment="Stretch" x:Name="Export_Button" Height="20" Content="Export" Padding="0,0,0,0" BorderThickness="0" Margin="10,120,10,0" VerticalAlignment="Top" Click="Export_Button_Click"/>
             <Button Grid.Column="2" HorizontalAlignment="Stretch" x:Name="Disable_Button" IsEnabled="False" Height="20" Content="Disable" Padding="0,0,0,0" BorderThickness="0" Margin="10,120,10,0" VerticalAlignment="Top" Click="Disable_Button_Click"/>
             <Button Grid.Column="3" HorizontalAlignment="Stretch" x:Name="Delete_Button" IsEnabled="False" Height="20" Content="Delete" Padding="0,0,0,0" BorderThickness="0" Margin="10,120,10,0" VerticalAlignment="Top" Click="Delete_Button_Click"/>
             <Button Grid.Column="4" HorizontalAlignment="Stretch" x:Name="Edit_Button" IsEnabled="False" Height="20" Content="Edit" Padding="0,0,0,0" BorderThickness="0" Margin="10,120,10,0" VerticalAlignment="Top" Click="Edit_Button_Click"/>
-            <Button Grid.Column="5" HorizontalAlignment="Stretch" x:Name="add_Button" Height="20" Content="add_debug" Padding="0,0,0,0" BorderThickness="0" Margin="10,120,10,0" VerticalAlignment="Top" Click="add_Button_Click"/>
         </Grid>
     </Grid>
 </Page>

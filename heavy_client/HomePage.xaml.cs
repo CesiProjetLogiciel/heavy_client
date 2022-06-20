@@ -199,36 +199,32 @@ namespace heavy_client
             }
         }
 
-        private void add_Button_Click(object sender, RoutedEventArgs e)
-        {
-            UserORMResources.Users.Add(new User
-            {
-                UserID = 5,
-                LastName = "Test",
-                FirstName = "test48856262",
-                Email = "test@gmail.test",
-                IsSuspended = true,
-                UserType = new UserType { UserTypeID = 2, Type="Livreur"}
-            });
-        }
-
         private async void Export_Button_Click(object sender, RoutedEventArgs e)
         {
             const string end_line = ";\n";
 
-            string csv = "ID,Lastname,Firstname,Email Address,Is suspended,Type;\n";
+            string csv = "ID,Lastname,Firstname,Email Address,Is suspended,Type,Paypal address;\n";
 
             foreach (User user in UserORMResources.Users)
             {
-                string last = user.GetType().GetProperties().Last().GetValue(user, null).ToString();
-                foreach (PropertyInfo prop in user.GetType().GetProperties())
-                {
-                    csv += prop.GetValue(user, null).ToString();
-                    if (prop.GetValue(user, null).ToString() != last)
-                    {
-                        csv += ",";
-                    }
-                }
+                csv += string.Format("{0},{1},{2},{3},{4},{5},{6}",
+                    user.UserID, 
+                    user.LastName, 
+                    user.FirstName, 
+                    user.Email, 
+                    user.IsSuspended, 
+                    user.UserType.Type, 
+                    user.PaypalEmail.Email 
+                );
+                //string last = user.GetType().GetProperties().Last().GetValue(user, null).ToString();
+                //foreach (PropertyInfo prop in user.GetType().GetProperties())
+                //{
+                //    csv += prop.GetValue(user, null).ToString();
+                //    if (prop.GetValue(user, null).ToString() != last)
+                //    {
+                //        csv += ",";
+                //    }
+                //}
 
                 csv += end_line;
             }
@@ -253,14 +249,14 @@ namespace heavy_client
                 // the other app can update the remote version of the file.
                 // Completing updates may require Windows to ask for user input.
                 Windows.Storage.Provider.FileUpdateStatus status = await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(file);
-                //if (status == Windows.Storage.Provider.FileUpdateStatus.Complete)
-                //{
-                //    this.textBlock.Text = "File " + file.Name + " was saved.";
-                //}
-                //else
-                //{
-                //    this.textBlock.Text = "File " + file.Name + " couldn't be saved.";
-                //}
+                if (status == Windows.Storage.Provider.FileUpdateStatus.Complete)
+                {
+                    _ = new MessageDialog("File " + file.Name + " was saved successfully.").ShowAsync();
+                }
+                else
+                {
+                    _ = new MessageDialog("File " + file.Name + " couldn't be saved.").ShowAsync();
+                }
             }
             //else
             //{

@@ -39,7 +39,8 @@ namespace heavy_client
 
         public static Visibility IsVisible(User user)
         {
-            if (user.UserType.Type.ToLower() == "Restaurant".ToLower())
+            if (user.UserType.Type.ToLower() == "Restaurant".ToLower() || 
+                user.UserType.Type.ToLower() == "Livreur".ToLower())
             {
                 return Visibility.Visible;
             }
