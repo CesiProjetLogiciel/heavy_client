@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -32,36 +33,51 @@ namespace heavy_client
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            Connect();
-        }
-
-        private void Connect()
-        {
-            string data_source = server_addressTextBox.Text;
-            string username = usernameTextBox.Text;
-            string password = passwordBox.Password;
+            connectButton.Visibility = Visibility.Collapsed;
+            connectionProgress.Visibility = Visibility.Visible;
 
             string connectionString = string.Format(@"Data Source={0};Initial Catalog=cesieats;User ID={1};Password={2}",
-                data_source, username, password);
-            SqlConnection cnn = new SqlConnection(connectionString);
+                server_addressTextBox.Text,
+                usernameTextBox.Text,
+                passwordBox.Password);
+
             try
             {
-                cnn.Open();
-                if (cnn.State == System.Data.ConnectionState.Open)
-                {
-                    _ = new MessageDialog("Connected").ShowAsync();
-                    (Application.Current as App).ConnectionString = connectionString;
-                    cnn.Close();
-                    Frame.Navigate(typeof(HomePage));
-                    
-                }
+                await Task.Run(() => Connect(connectionString));
+                (Application.Current as App).ConnectionString = connectionString;
+                Frame.Navigate(typeof(HomePage));
             }
             catch (Exception exc)
             {
                 _ = new MessageDialog(exc.Message).ShowAsync();
+                connectButton.Visibility = Visibility.Visible;
+                connectionProgress.Visibility = Visibility.Collapsed;
             }
+            //if (connect)
+            //{
+            //    (Application.Current as App).ConnectionString = connectionString;
+            //    Frame.Navigate(typeof(HomePage));
+            //}
+            //else
+            //{
+            //    connectButton.Visibility = Visibility.Visible;
+            //    connectionProgress.Visibility = Visibility.Collapsed;
+            //}
+        }
+
+        private bool Connect(string connectionString)
+        {
+            bool EndWithoutError = false;
+
+            SqlConnection cnn = new SqlConnection(connectionString);
+            cnn.Open();
+            if (cnn.State == System.Data.ConnectionState.Open)
+            {
+                cnn.Close();
+            }
+            return EndWithoutError;
         }
     }
 }
