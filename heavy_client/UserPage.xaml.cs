@@ -60,6 +60,33 @@ namespace heavy_client
         public UserPage()
         {
             InitializeComponent();
+
+            if (!UserPermissions.IsAllowed("DeliveryAddress", "INSERT"))
+                AddDeliveryAddress.IsEnabled = false;
+            if (!UserPermissions.IsAllowed("BillingAddress", "INSERT"))
+                AddDeliveryAddress.IsEnabled = false;
+
+            if (!UserPermissions.IsAllowed("Users", "UPDATE"))
+            {
+                LastnameTextBox.IsEnabled = false;
+                FirstnameTextBox.IsEnabled = false;
+                EmailTextBox.IsEnabled = false;
+                ClientTypeComboBox.IsEnabled = false;
+            }
+
+            if (!(UserPermissions.IsAllowed("paypalAddress", "UPDATE") 
+                && UserPermissions.IsAllowed("paypalAddress", "INSERT")))
+                PaypalEmailTextBox.IsEnabled = false;
+
+            if (!(UserPermissions.IsAllowed("Users", "UPDATE")
+                    && UserPermissions.IsAllowed("BillingAddress", "UPDATE")
+                    && UserPermissions.IsAllowed("DeliveryAddress", "UPDATE")
+                    && UserPermissions.IsAllowed("BillingAddress", "INSERT")
+                    && UserPermissions.IsAllowed("DeliveryAddress", "INSERT")
+                    && UserPermissions.IsAllowed("paypalAddress", "UPDATE")
+                    && UserPermissions.IsAllowed("paypalAddress", "INSERT")
+                    && _isPaypalAllowed.Contains(UserSelected.UserType.Type.ToLower())))
+                Save_Button.IsEnabled = false;
         }
 
         // Define this method within your main page class.
@@ -401,9 +428,11 @@ namespace heavy_client
         {
             ListView listview = sender as ListView;
             if (listview.Name == "DeliveryAddressListView")
-                DeleteDeliveryAddress.IsEnabled = listview.SelectedItem != null;
+                DeleteDeliveryAddress.IsEnabled = listview.SelectedItem != null 
+                    && UserPermissions.IsAllowed("DeliveryAddress", "DELETE");
             else if (listview.Name == "BillingAddressListView")
-                DeleteBillingAddress.IsEnabled = listview.SelectedItem != null;
+                DeleteBillingAddress.IsEnabled = listview.SelectedItem != null
+                    && UserPermissions.IsAllowed("BillingAddress", "DELETE");
         }
     }
 }

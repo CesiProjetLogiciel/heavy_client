@@ -143,9 +143,18 @@ namespace heavy_client
             if ((sender as ListView).SelectedItem != null)
             {
                 User user = (sender as ListView).SelectedItem as User;
-                Disable_Button.IsEnabled = true;
+                if (UserPermissions.IsAllowed("Users.isSuspended", "UPDATE"))
+                    Disable_Button.IsEnabled = true;
+
+                if (UserPermissions.IsAllowed("Users", "UPDATE"))
+                    Edit_Button.IsEnabled = true;
                 Edit_Button.IsEnabled = true;
-                Delete_Button.IsEnabled = true;
+
+                if (UserPermissions.IsAllowed("Users", "DELETE")
+                    && UserPermissions.IsAllowed("BillingAddress", "DELETE")
+                    && UserPermissions.IsAllowed("DeliveryAddress", "DELETE")
+                    && UserPermissions.IsAllowed("paypalAddress", "DELETE"))
+                    Delete_Button.IsEnabled = true;
                 _changeIsSuspendedTo = user.IsSuspended;
 
                 if (user.IsSuspended == true)

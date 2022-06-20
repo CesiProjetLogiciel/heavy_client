@@ -38,15 +38,26 @@ namespace heavy_client
             connectButton.Visibility = Visibility.Collapsed;
             connectionProgress.Visibility = Visibility.Visible;
 
+            string server_address = server_addressTextBox.Text;
+            string username = usernameTextBox.Text;
+            string password = passwordBox.Password;
+
             string connectionString = string.Format(@"Data Source={0};Initial Catalog=cesieats;User ID={1};Password={2}",
-                server_addressTextBox.Text,
-                usernameTextBox.Text,
-                passwordBox.Password);
+                server_address,
+                username,
+                password);
 
             try
             {
                 await Task.Run(() => Connect(connectionString));
                 (Application.Current as App).ConnectionString = connectionString;
+                Dictionary<string, List<string>> permissions = null;
+
+                if (username == "sa")
+                    UserPermissions.Permissions = await Task.Run(() => UserPermissions.PopulatePermissionsSA());
+                else
+                    UserPermissions.Permissions = await Task.Run(() => UserPermissions.PopulatePermissions(connectionString, UserPermissions.query));
+                
                 Frame.Navigate(typeof(HomePage));
             }
             catch (Exception exc)
