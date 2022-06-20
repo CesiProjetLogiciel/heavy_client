@@ -30,11 +30,10 @@ namespace heavy_client
         private Country _countryName;
         private string _phoneNumber;
         private Country _phoneCountryCode;
-
-        public Page DataContext { get; set; }
         
         public int UserID { get; set; }
         public int AddressID { get; set; }
+        public bool IsRegistered { get; set; } = true;
         public string Zipcode
         {
             get { return _zipcode; }
