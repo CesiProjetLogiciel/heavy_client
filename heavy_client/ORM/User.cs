@@ -22,8 +22,14 @@ namespace heavy_client
         private string _email;
         private bool _isSuspended;
         private UserType _userType;
+        private PaypalEmail _paypalEmail = new PaypalEmail();
 
         public int UserID { get; set; }
+        public PaypalEmail PaypalEmail
+        {
+            get { return _paypalEmail; }
+            set { if (_paypalEmail != value) { _paypalEmail = value; NotifyPropertyChanged(); } }
+        }
         public string LastName
         {
             get { return _lastName; }

@@ -37,6 +37,18 @@ namespace heavy_client
 
         public User UserSelected { get; set; }
 
+        public static Visibility IsVisible(User user)
+        {
+            if (user.UserType.Type.ToLower() == "Restaurant".ToLower())
+            {
+                return Visibility.Visible;
+            }
+            else
+            {
+                return Visibility.Collapsed;
+            }
+        }
+
         string GetAddressQuery (string table)
             {
                 return string.Format("SELECT zipcode, city, address, state, " +
@@ -187,6 +199,8 @@ namespace heavy_client
                 " WHERE Users.id = {4};", UserSelected.FirstName, UserSelected.LastName, 
                 UserSelected.Email, UserSelected.UserType.UserTypeID, UserSelected.UserID);
 
+            query += GetQueryPaypal(UserSelected);
+
             foreach(var address in AddressORMResources.DeliveryAddresses)
             {
                 query += GetQueryAddresses("DeliveryAddress", address);
@@ -224,6 +238,32 @@ namespace heavy_client
                 Debug.WriteLine("Exception: " + eSql.Message);
                 _ = new MessageDialog("Exception: " + eSql.Message).ShowAsync();
             }
+        }
+
+        private string GetQueryPaypal(User user)
+        {
+            if (user.PaypalEmail.IsRegistered)
+            {
+                return GetUpdatePaypal(user);
+            }
+            else
+            {
+                return GetInsertPaypal(user);
+            }
+        }
+
+        private string GetInsertPaypal(User user)
+        {
+            string query = string.Format("INSERT INTO paypalAddress VALUES ('{0}',{1});", 
+                user.PaypalEmail.Email, user.UserID);
+            return query;
+        }
+
+        private string GetUpdatePaypal(User user)
+        {
+            string query = string.Format("UPDATE paypalAddress SET paypal = '{0}' WHERE id_Users = {1};",
+                user.PaypalEmail.Email, user.UserID);
+            return query;
         }
 
         private string GetQueryAddresses(string table, Address address)

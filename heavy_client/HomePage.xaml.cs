@@ -50,7 +50,8 @@ namespace heavy_client
             // Instead of hard coded items, the data could be pulled
             // asynchronously from a database or the internet.
             const string GetUsersQuery = "SELECT Users.id, lastname, firstname," +
-                                         " email, isSuspended, id_UserTypes FROM Users ";
+                                         " email, isSuspended, id_UserTypes, paypalAddress.id, paypalAddress.paypal" +
+                                         " FROM Users LEFT JOIN paypalAddress ON Users.id=paypalAddress.id_Users";
             const string GetUserTypesQuery = "SELECT UserTypes.id, UserTypes.type"+
                                             " FROM UserTypes;";
             GetUserTypes(_connectionString, GetUserTypesQuery);
@@ -119,6 +120,9 @@ namespace heavy_client
                                         IsSuspended = reader.GetBoolean(4),
                                         UserType = UserTypeORMResources.UserTypes.Where(x => x.UserTypeID == reader.GetInt32(5)).First()
                                     };
+                                    user.PaypalEmail.PaypalEmailID = reader.IsDBNull(6) ? null : (int?)reader.GetInt32(6);
+                                    user.PaypalEmail.Email = reader.IsDBNull(6) ? null : reader.GetString(7);
+                                    user.PaypalEmail.IsRegistered = reader.IsDBNull(6) ? false : true;
                                     UserORMResources.Users.Add(user);
                                 }
                             }
