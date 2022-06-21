@@ -60,6 +60,13 @@ namespace heavy_client
         public UserPage()
         {
             InitializeComponent();
+        }
+
+        // Define this method within your main page class.
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            UserSelected = e.Parameter as User;
 
             if (!UserPermissions.IsAllowed("DeliveryAddress", "INSERT"))
                 AddDeliveryAddress.IsEnabled = false;
@@ -74,7 +81,7 @@ namespace heavy_client
                 ClientTypeComboBox.IsEnabled = false;
             }
 
-            if (!(UserPermissions.IsAllowed("paypalAddress", "UPDATE") 
+            if (!(UserPermissions.IsAllowed("paypalAddress", "UPDATE")
                 && UserPermissions.IsAllowed("paypalAddress", "INSERT")))
                 PaypalEmailTextBox.IsEnabled = false;
 
@@ -82,18 +89,8 @@ namespace heavy_client
                     && UserPermissions.IsAllowed("BillingAddress", "UPDATE")
                     && UserPermissions.IsAllowed("DeliveryAddress", "UPDATE")
                     && UserPermissions.IsAllowed("BillingAddress", "INSERT")
-                    && UserPermissions.IsAllowed("DeliveryAddress", "INSERT")
-                    && UserPermissions.IsAllowed("paypalAddress", "UPDATE")
-                    && UserPermissions.IsAllowed("paypalAddress", "INSERT")
-                    && _isPaypalAllowed.Contains(UserSelected.UserType.Type.ToLower())))
+                    && UserPermissions.IsAllowed("DeliveryAddress", "INSERT")))
                 Save_Button.IsEnabled = false;
-        }
-
-        // Define this method within your main page class.
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            UserSelected = e.Parameter as User;
 
             // Instead of hard coded items, the data could be pulled
             // asynchronously from a database or the internet.
