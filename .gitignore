@@ -1,0 +1,5 @@
+.vs
+/heavy_client/obj
+/heavy_client/bin
+/heavy_client/BundleArtifacts/x64.txt
+/heavy_client/BundleArtifacts/x86.txt
