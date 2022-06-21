@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -28,9 +29,30 @@ namespace heavy_client
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public string ServerAddress = "DESKTOP-LQN9T82\\SQLCESIEATS";
+        public string Username;
+        public string Password;
+
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        // Define this method within your main page class.
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            // Instead of hard coded items, the data could be pulled
+            // asynchronously from a database or the internet.
+
+            if ((Application.Current as App).ConnectionString == null)
+                return;
+            string connectionString = (Application.Current as App).ConnectionString;
+            Match pattern = new Regex(@"^Data Source=([a-zA-Z0-9.\-\\]+);Initial Catalog=cesieats;User ID=([\w\s]+);Password=([a-zA-Z0-9#?!@$ %^&*-]+)$").Match(connectionString);
+            ServerAddress = pattern.Groups[1].Value;
+            //Username = pattern.Groups[2].Value;
+            //Password = pattern.Groups[3].Value;
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -38,14 +60,10 @@ namespace heavy_client
             connectButton.Visibility = Visibility.Collapsed;
             connectionProgress.Visibility = Visibility.Visible;
 
-            string server_address = server_addressTextBox.Text;
-            string username = usernameTextBox.Text;
-            string password = passwordBox.Password;
-
             string connectionString = string.Format(@"Data Source={0};Initial Catalog=cesieats;User ID={1};Password={2}",
-                server_address,
-                username,
-                password);
+                ServerAddress,
+                Username,
+                Password);
 
             try
             {
@@ -53,7 +71,7 @@ namespace heavy_client
                 (Application.Current as App).ConnectionString = connectionString;
                 Dictionary<string, List<string>> permissions = null;
 
-                if (username == "sa")
+                if (Username == "sa")
                     UserPermissions.Permissions = await Task.Run(() => UserPermissions.PopulatePermissionsSA());
                 else
                     UserPermissions.Permissions = await Task.Run(() => UserPermissions.PopulatePermissions(connectionString, UserPermissions.query));

@@ -58,7 +58,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBox Margin="25,37,25,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="31" Width="auto" TextChanged="SearchBar_TextChanged" PlaceholderText="Search..."/>
+        <Button x:Name="DisconnectButton" Content="Disconnect" Click="Disconnect_Button_Click" Margin="0,20,25,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <TextBox Margin="25,70,25,0" Name="SearchBar" TextWrapping="Wrap" VerticalAlignment="Top" Height="31" Width="auto" TextChanged="SearchBar_TextChanged" PlaceholderText="Search..."/>
         <Grid Margin="0,0,15,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
