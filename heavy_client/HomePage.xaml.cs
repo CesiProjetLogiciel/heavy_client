@@ -146,8 +146,8 @@ namespace heavy_client
                 if (UserPermissions.IsAllowed("Users.isSuspended", "UPDATE"))
                     Disable_Button.IsEnabled = true;
 
-                if (UserPermissions.IsAllowed("Users", "UPDATE"))
-                    Edit_Button.IsEnabled = true;
+                //if (UserPermissions.IsAllowed("Users", "UPDATE"))
+                //    Edit_Button.IsEnabled = true;
                 Edit_Button.IsEnabled = true;
 
                 if (UserPermissions.IsAllowed("Users", "DELETE")
