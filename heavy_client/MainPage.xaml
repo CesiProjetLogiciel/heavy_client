@@ -12,9 +12,9 @@
     <Grid Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="auto">
         <ProgressBar x:Name="connectionProgress" HorizontalAlignment="Stretch" Margin="45,200,45,0" Visibility="Collapsed" IsIndeterminate="True"/>
         <Button x:Name="connectButton" Content="Connect" Click="Button_Click" HorizontalAlignment="Stretch" Margin="45,200,45,0"/>
-        <TextBox x:Name="server_addressTextBox" HorizontalAlignment="Stretch" Margin="45,67,45,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="32"/>
-        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Stretch" Margin="45,148,45,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="32"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Stretch" Margin="45,229,45,0" VerticalAlignment="Top" Password=""/>
+        <TextBox x:Name="server_addressTextBox" HorizontalAlignment="Stretch" Margin="45,67,45,0" TextWrapping="Wrap" Text="{x:Bind ServerAddress, Mode=TwoWay}" VerticalAlignment="Top" Height="32"/>
+        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Stretch" Margin="45,148,45,0" TextWrapping="Wrap" Text="{x:Bind Username, Mode=TwoWay}" VerticalAlignment="Top" Height="32"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Stretch" Margin="45,229,45,0" VerticalAlignment="Top" Password="{x:Bind Password, Mode=TwoWay}"/>
         <TextBlock HorizontalAlignment="Left" Margin="45,44,0,0" TextWrapping="Wrap" Text="Server Address" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="45,125,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="45,205,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top"/>

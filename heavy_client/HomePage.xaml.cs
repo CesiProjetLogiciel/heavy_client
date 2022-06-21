@@ -329,5 +329,9 @@ namespace heavy_client
         private void Edit_Button_Click(object sender, RoutedEventArgs e) => 
             Frame.Navigate(typeof(UserPage), UsersListView.SelectedItem);
 
+        private void Disconnect_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
     }
 }
