@@ -143,7 +143,8 @@ namespace heavy_client
             if ((sender as ListView).SelectedItem != null)
             {
                 User user = (sender as ListView).SelectedItem as User;
-                if (UserPermissions.IsAllowed("Users.isSuspended", "UPDATE"))
+                if (UserPermissions.IsAllowed("Users.isSuspended", "UPDATE") 
+                    || UserPermissions.IsAllowed("Users", "UPDATE"))
                     Disable_Button.IsEnabled = true;
 
                 //if (UserPermissions.IsAllowed("Users", "UPDATE"))
