@@ -33,7 +33,7 @@ namespace heavy_client
     {
 
         private readonly string _connectionString = (Application.Current as App).ConnectionString;
-        private static readonly string[] _isPaypalAllowed = { "restaurant", "livreur" };
+        private static readonly string[] _isPaypalAllowed = { "restaurant", "delivery man" };
 
         public User UserSelected { get; set; }
 
