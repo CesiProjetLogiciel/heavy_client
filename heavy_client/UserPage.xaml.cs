@@ -89,10 +89,7 @@ namespace heavy_client
                     && UserPermissions.IsAllowed("BillingAddress", "UPDATE")
                     && UserPermissions.IsAllowed("DeliveryAddress", "UPDATE")
                     && UserPermissions.IsAllowed("BillingAddress", "INSERT")
-                    && UserPermissions.IsAllowed("DeliveryAddress", "INSERT")
-                    && UserPermissions.IsAllowed("paypalAddress", "UPDATE")
-                    && UserPermissions.IsAllowed("paypalAddress", "INSERT")
-                    && _isPaypalAllowed.Contains(UserSelected.UserType.Type.ToLower())))
+                    && UserPermissions.IsAllowed("DeliveryAddress", "INSERT")))
                 Save_Button.IsEnabled = false;
 
             // Instead of hard coded items, the data could be pulled
