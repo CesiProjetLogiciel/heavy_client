@@ -156,14 +156,14 @@ namespace heavy_client
                                 {
                                     var address = new Address
                                     {
-                                        Zipcode = reader.GetString(0),
-                                        City = reader.GetString(1),
-                                        Street = reader.GetString(2),
-                                        State = reader.GetString(3),
-                                        AdditionnalInfo = reader.GetString(4),
-                                        Lastname = reader.GetString(5),
-                                        Firstname = reader.GetString(6),
-                                        PhoneNumber = reader.GetString(7),
+                                        Zipcode = !reader.IsDBNull(0) ? reader.GetString(0) : "",
+                                        City = !reader.IsDBNull(1) ? reader.GetString(1) : "",
+                                        Street = !reader.IsDBNull(2) ? reader.GetString(2) : "",
+                                        State = !reader.IsDBNull(3) ? reader.GetString(3) : "",
+                                        AdditionnalInfo = !reader.IsDBNull(4) ? reader.GetString(4) : "",
+                                        Lastname = !reader.IsDBNull(5) ? reader.GetString(5) : "",
+                                        Firstname = !reader.IsDBNull(6) ? reader.GetString(6) : "",
+                                        PhoneNumber = !reader.IsDBNull(7) ? reader.GetString(7) : "",
                                         PhoneCountryCode = CountryORMResources.Countries.Where(x => x.PhoneCountryCode == reader.GetString(8)).First(),
                                         CountryName = CountryORMResources.Countries.Where(x => x.Name == reader.GetString(9)).First(),
                                         AddressID = reader.GetInt32(10)
@@ -182,14 +182,14 @@ namespace heavy_client
                                 {
                                     var address = new Address
                                     {
-                                        Zipcode = reader.GetString(0),
-                                        City = reader.GetString(1),
-                                        Street = reader.GetString(2),
-                                        State = reader.GetString(3),
-                                        AdditionnalInfo = reader.GetString(4),
-                                        Lastname = reader.GetString(5),
-                                        Firstname = reader.GetString(6),
-                                        PhoneNumber = reader.GetString(7),
+                                        Zipcode = !reader.IsDBNull(0) ? reader.GetString(0) : "",
+                                        City = !reader.IsDBNull(1) ? reader.GetString(1) : "",
+                                        Street = !reader.IsDBNull(2) ? reader.GetString(2) : "",
+                                        State = !reader.IsDBNull(3) ? reader.GetString(3) : "",
+                                        AdditionnalInfo = !reader.IsDBNull(4) ? reader.GetString(4) : "",
+                                        Lastname = !reader.IsDBNull(5) ? reader.GetString(5) : "",
+                                        Firstname = !reader.IsDBNull(6) ? reader.GetString(6) : "",
+                                        PhoneNumber = !reader.IsDBNull(7) ? reader.GetString(7) : "",
                                         PhoneCountryCode = CountryORMResources.Countries.Where(x => x.PhoneCountryCode == reader.GetString(8)).First(),
                                         CountryName = CountryORMResources.Countries.Where(x => x.Name == reader.GetString(9)).First(),
                                         AddressID = reader.GetInt32(10)
